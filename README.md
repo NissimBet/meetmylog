@@ -1,15 +1,18 @@
 ## 🚀 Quick start
 
-1.  **Install dependencies**
-    `npm i`
-2.  **Run Development mode**
-    `npm run develop`
+1. **Install gatsby-cli**
+   `npm install -g gatsby-cli`
 
-    Your site is running at `http://localhost:8000`!
+2. **Install dependencies**
+   `npm i`
+3. **Run Development mode**
+   `npm run develop`
 
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+   Your site is running at `http://localhost:8000`!
 
-3.  **Edit and the changes will be shown in real-time**
+   _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+
+4. **Edit and the changes will be shown in real-time**
 
 ## 🧐 What's inside?
 
