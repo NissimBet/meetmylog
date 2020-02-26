@@ -1,16 +1,40 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
+import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { Box } from 'rebass';
 
-import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
+import Header from './Header';
+import Footer from './Footer';
+import Hello from './Test';
+import { theme } from '../utils/theme';
 
-import Header from './header'
-import './layout.css'
-import Hello from './test'
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    height: 100vh;
+    font-family: sans-serif;
+  }
+
+  body, #___gatsby, #gatsby-focus-wrapper {
+    height: 100%;
+    margin: 0;
+  }
+
+  h1, h2, h3,
+  h4, h5, h6 {
+    margin: 0;
+  }
+`;
+
+const PageLayout = styled(Box)({
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gridTemplateRows: 'auto 1fr auto',
+  height: '100%',
+});
 
 const Layout: React.FunctionComponent = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -21,28 +45,26 @@ const Layout: React.FunctionComponent = ({ children }) => {
         }
       }
     }
-  `)
+  `);
 
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <Hello />
-        <footer>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <PageLayout>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <Box margin={'0 auto'} maxWidth={1200} padding="1.0875rem 1.45rem">
+          <Hello />
+          {/* <main>{children}</main> */}
+          {/* <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
           <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
-    </>
-  )
-}
+        </footer> */}
+        </Box>
+        <Footer />
+      </PageLayout>
+    </ThemeProvider>
+  );
+};
 
-export default Layout
+export default Layout;

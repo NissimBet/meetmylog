@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Log My Meetings`,
+    description: `Get to log the events of your meetings! Have the notes of the meetings all in one place, share them with your coworkers`,
+    author: `Nissim Betesh, Alejandro Longoria, David Gonzáalez, Marvin`,
   },
   plugins: [
     `gatsby-plugin-styled-components`,
@@ -25,8 +25,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `log-my-meetings`,
+        short_name: `logmymeetings`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
