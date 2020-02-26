@@ -5,6 +5,12 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-typescript`,
+      isTSX: true, // defaults to false
+      jsxPragma: `jsx`, // defaults to "React"
+      allExtensions: true, // defaults to false
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
