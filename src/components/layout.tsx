@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: sans-serif;
   }
 
-  body, #___gatsby, #gatsby-focus-wrapper {
+  body, #___next {
     height: 100%;
     margin: 0;
   }
