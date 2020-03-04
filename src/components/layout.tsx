@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { Box } from 'rebass';
 
-import Header from './Header';
+import Navbar from './Navbar';
 import Footer from './Footer';
 import Hello from './Test';
 import { theme } from '../utils/theme';
@@ -51,15 +51,9 @@ const Layout: React.FunctionComponent = ({ children }) => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <PageLayout>
-        <Header siteTitle={data.site.siteMetadata.title} />
+        <Navbar siteTitle={data.site.siteMetadata.title} />
         <Box margin={'0 auto'} maxWidth={1200} padding="1.0875rem 1.45rem">
           <Hello />
-          {/* <main>{children}</main> */}
-          {/* <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer> */}
         </Box>
         <Footer />
       </PageLayout>

@@ -24,7 +24,7 @@ const StyledOutlineButton = styled(StyledButton)(({ theme }) => ({
 
   '&:hover': {
     color: theme.colors.text.secondary,
-    backgroundColor: theme.colors.container.secondary,
+    backgroundColor: theme.colors.container.secondary + '50',
   },
 }));
 
@@ -34,7 +34,7 @@ interface ButtonProps {
 
 const Button: React.FunctionComponent<ButtonProps> = ({
   children,
-  variant = 'outline',
+  variant,
 }) => {
   if (variant === 'outline') {
     return <StyledOutlineButton>{children}</StyledOutlineButton>;
