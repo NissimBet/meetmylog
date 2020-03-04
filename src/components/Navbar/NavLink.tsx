@@ -19,11 +19,7 @@ const NavLink: React.FunctionComponent<CustomLinkProps> = ({
   children,
   to,
 }) => {
-  return (
-    <NavbarLink activeClassName="active-link" to={to}>
-      {children}
-    </NavbarLink>
-  );
+  return <NavbarLink to={to}>{children}</NavbarLink>;
 };
 
 export default NavLink;

@@ -1,13 +1,8 @@
-import React from 'react'
+import React from "react";
+import { NextPage } from "next";
 
-import Layout from '../components/layout'
+const Index: NextPage<{ userAgent: string }> = ({ userAgent }) => {
+  return <h1>Hello</h1>;
+};
 
-const IndexPage: React.FunctionComponent = () => (
-  <Layout>
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-  </Layout>
-)
-
-export default IndexPage
+export default Index;

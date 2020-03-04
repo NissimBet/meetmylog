@@ -1,11 +1,10 @@
 import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { Box } from 'rebass';
 
 import Navbar from './Navbar';
 import Footer from './Footer';
-import Hello from './Test';
+
 import { theme } from '../utils/theme';
 
 const GlobalStyle = createGlobalStyle`
@@ -37,23 +36,13 @@ const PageLayout = styled(Box)({
 });
 
 const Layout: React.FunctionComponent = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `);
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <PageLayout>
-        <Navbar siteTitle={data.site.siteMetadata.title} />
+        <Navbar siteTitle="Meet my log" />
         <Box margin={'0 auto'} maxWidth={1200} padding="1.0875rem 1.45rem">
-          <Hello />
+          {children}
         </Box>
         <Footer />
       </PageLayout>
