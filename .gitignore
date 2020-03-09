@@ -4,8 +4,6 @@ node_modules
 yarn-error.log
 
 # Build files
-## Gatsby
-/public
 
 # OSX
 .DS_Store

@@ -1,19 +1,16 @@
 import React from 'react';
-import CustomLink, { CustomLinkProps } from '../Link';
 import styled from 'styled-components';
 
-const NavbarLink = styled(CustomLink)(({ theme }) => ({
-  color: theme.colors.neutral.primary,
-  '&:hover': {
-    textDecorationColor: theme.colors.text.secondary,
-  },
-  '&.active-link': {
-    color: theme.colors.text.secondary,
-    '&:hover': {
-      color: theme.colors.text.secondary,
-    },
-  },
-}));
+import CustomLink, { CustomLinkProps } from '../Link';
+
+const NavbarLink = styled(CustomLink)`
+  color: ${({ theme }) => theme.colors.neutral.primary};
+
+  &:hover {
+    text-decoration-color: ${({ theme }) => theme.colors.text.secondary};
+    color: ${({ theme }) => theme.colors.text.secondary};
+  }
+`;
 
 const NavLink: React.FunctionComponent<CustomLinkProps> = ({
   children,

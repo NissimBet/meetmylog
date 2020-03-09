@@ -29,7 +29,7 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => (
   <NavbarContainer>
     <NavbarContent>
       <Flex width={2 / 5} justifyContent="space-evenly">
-        <NavLink to="/">{siteTitle}</NavLink>
+        <NavLink to="/blogs/a">{siteTitle}</NavLink>
 
         <NavLink to="/">{siteTitle}</NavLink>
 

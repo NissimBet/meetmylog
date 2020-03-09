@@ -1,27 +1,33 @@
 import React from 'react';
-//import { Link } from 'gatsby';
+import Link from 'next/link';
 import styled from 'styled-components';
 
-const Link: React.FunctionComponent<{ to: string }> = ({ to }) => <a></a>;
+export const StyledLink = styled.a`
+  color: ${({ theme }) => theme.colors.text.primary};
+  text-decoration: none;
 
-const LinkStyle = styled(Link)(({ theme }) => ({
-  color: theme.colors.text.primary,
-  textDecoration: 'none',
-  '&:hover': {
-    color: theme.colors.text.secondary,
-    textDecoration: `underline ${theme.colors.text.primary}`,
-  },
-}));
+  transition: color 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+    text-decoration 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &:hover {
+    text-decoration: underline ${({ theme }) => theme.colors.text.secondary};
+    color: ${({ theme }) => theme.colors.text.secondary};
+  }
+`;
 
 export interface CustomLinkProps {
   to: string;
 }
 
-export const CustomLink: React.FunctionComponent<CustomLinkProps> = ({
+const CustomLink: React.FunctionComponent<CustomLinkProps> = ({
   to,
   children,
 }) => {
-  return <LinkStyle to={to}>{children}</LinkStyle>;
+  return (
+    <Link href={to} passHref>
+      <StyledLink>{children}</StyledLink>
+    </Link>
+  );
 };
 
-export default LinkStyle;
+export default CustomLink;

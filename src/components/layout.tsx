@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: sans-serif;
   }
 
-  body, #___next {
+  body, #__next {
     height: 100%;
     margin: 0;
   }
