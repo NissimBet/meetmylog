@@ -29,14 +29,14 @@ const SiteLinks = styled.div`
 
   & > * {
     width: 30%;
-    text-align: 'center';
+    text-align: center;
     margin-top: ${({ theme }) => theme.scaling(1)};
   }
 `;
 
 const CustomLink = styled(Link)`
   &:hover {
-    color: ${({ theme }) => theme.colorss.text.tertiary};
+    color: ${({ theme }) => theme.colors.text.tertiary};
   }
 `;
 
