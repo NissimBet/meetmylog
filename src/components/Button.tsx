@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const StyledButton = styled('button')`
   color: ${({ theme }) => theme.colors.text.primary};
-  font-weight: 'bold';
-  cursor: 'pointer';
+  font-weight: bold;
+  cursor: pointer;
   border-radius: 5;
 
   margin-top: ${({ theme }) => theme.scaling(1)}px;
@@ -19,12 +19,12 @@ const StyledButton = styled('button')`
 `;
 
 const StyledOutlineButton = styled(StyledButton)`
-  border: ${({ theme }) => theme.borders[0]}px;
+  border: ${({ theme }) => theme.borders[0]};
   background-color: transparent;
 
   &:hover {
     color: ${({ theme }) => theme.colors.text.secondary};
-    background-color: ${({ theme }) => theme.colors.container.secondary} + '50';
+    background-color: ${({ theme }) => theme.colors.container.secondary + '50'};
   }
 `;
 
