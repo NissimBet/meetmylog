@@ -1,32 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledButton = styled('button')(({ theme }) => ({
-  color: theme.colors.text.primary,
-  fontWeight: 'bold',
-  cursor: 'pointer',
-  borderRadius: 5,
+const StyledButton = styled('button')`
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-weight: 'bold';
+  cursor: 'pointer';
+  border-radius: 5;
 
-  marginTop: theme.scaling(1),
-  marginBottom: theme.scaling(1),
+  margin-top: ${({ theme }) => theme.scaling(1)}px;
+  margin-bottom: ${({ theme }) => theme.scaling(1)}px;
 
-  paddingTop: theme.scaling(1),
-  paddingBottom: theme.scaling(1),
-  paddingLeft: theme.scaling(2),
-  paddingRight: theme.scaling(2),
+  padding-top: ${({ theme }) => theme.scaling(1)}px;
+  padding-bottom: ${({ theme }) => theme.scaling(1)}px;
+  padding-left: ${({ theme }) => theme.scaling(2)}px;
+  padding-right: ${({ theme }) => theme.scaling(2)}px;
 
-  transition: 'background-color 0.25s cubic-bezier(.71,.24,.39,.83)',
-}));
+  transition: background-color 0.25s cubic-bezier(0.71, 0.24, 0.39, 0.83);
+`;
 
-const StyledOutlineButton = styled(StyledButton)(({ theme }) => ({
-  border: theme.borders[0],
-  backgroundColor: 'transparent',
+const StyledOutlineButton = styled(StyledButton)`
+  border: ${({ theme }) => theme.borders[0]}px;
+  background-color: transparent;
 
-  '&:hover': {
-    color: theme.colors.text.secondary,
-    backgroundColor: theme.colors.container.secondary + '50',
-  },
-}));
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.secondary};
+    background-color: ${({ theme }) => theme.colors.container.secondary} + '50';
+  }
+`;
 
 interface ButtonProps {
   variant?: 'outline';

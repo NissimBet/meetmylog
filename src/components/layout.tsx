@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
-import { Box } from 'rebass';
 
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -28,12 +27,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const PageLayout = styled(Box)({
-  display: 'grid',
-  gridTemplateColumns: '1fr',
-  gridTemplateRows: 'auto 1fr auto',
-  height: '100%',
-});
+const PageLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+`;
 
 const Layout: React.FunctionComponent = ({ children }) => {
   return (
@@ -41,9 +40,15 @@ const Layout: React.FunctionComponent = ({ children }) => {
       <GlobalStyle />
       <PageLayout>
         <Navbar siteTitle="Meet my log" />
-        <Box margin={'0 auto'} maxWidth={1200} padding="1.0875rem 1.45rem">
+        <div
+          style={{
+            margin: '0 auto',
+            maxWidth: 1200,
+            padding: '1.0875rem 1.45rem',
+          }}
+        >
           {children}
-        </Box>
+        </div>
         <Footer />
       </PageLayout>
     </ThemeProvider>

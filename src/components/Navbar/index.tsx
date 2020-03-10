@@ -1,25 +1,29 @@
 import React from 'react';
-import { Box, Flex } from 'rebass';
 import styled from 'styled-components';
 import Button from './../Button';
 import NavLink from './NavLink';
 
-const NavbarContainer = styled('div')(({ theme }) => ({
-  color: theme.colors.text.secondary,
-  backgroundColor: theme.colors.container.primary,
+const NavbarContainer = styled.div`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  background-color: ${({ theme }) => theme.colors.container.primary};
+  margin-bottom: ${({ theme }) => theme.scaling(1)}px;
+  padding: ${({ theme }) => theme.scaling(1)}px;
+`;
 
-  marginBottom: theme.scaling(1),
-  padding: theme.scaling(3),
-}));
+const NavbarContent = styled.div`
+  max-width: 1200px;
+  margin: auto;
 
-const NavbarContent = styled('div')({
-  maxWidth: 1200,
-  margin: 'auto',
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-});
+const NavbarLinks = styled.div`
+  display: flex;
+  align-items: space-evenly;
+  width: 40%;
+`;
 
 interface NavbarProps {
   siteTitle: string;
@@ -28,13 +32,11 @@ interface NavbarProps {
 const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => (
   <NavbarContainer>
     <NavbarContent>
-      <Flex width={2 / 5} justifyContent="space-evenly">
-        <NavLink to="/blogs/a">{siteTitle}</NavLink>
+      <NavbarLinks>
+        <NavLink to="/">Inicio</NavLink>
 
         <NavLink to="/">{siteTitle}</NavLink>
-
-        <NavLink to="/">{siteTitle}</NavLink>
-      </Flex>
+      </NavbarLinks>
 
       <Button variant="outline">Login</Button>
     </NavbarContent>

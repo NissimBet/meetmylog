@@ -1,47 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Box, Flex } from 'rebass';
 
 import Link from './Link';
 
-const FooterContainer = styled('footer')(({ theme }) => ({
-  backgroundColor: theme.colors.container.secondary,
-  width: '100%',
+const FooterContainer = styled.footer`
+  background-color: ${({ theme }) => theme.colors.container.secondary};
+  width: 100%;
+  color: ${({ theme }) => theme.colors.container.secondary};
+`;
 
-  color: theme.colors.text.primary,
-}));
+const FooterContent = styled.div`
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 2fr;
+  column-gap: ${({ theme }) => theme.scaling(3)};
 
-const FooterContent = styled('div')(({ theme }) => ({
-  display: 'grid',
-  gridTemplateRows: '1fr',
-  gridTemplateColumns: '1fr 2fr',
-  columnGap: theme.scaling(3),
+  padding: ${({ theme }) => theme.scaling(2)};
+  padding-bottom: ${({ theme }) => theme.scaling(3)};
+  max-width: 1200px;
+  margin: 0 auto;
+`;
 
-  padding: theme.scaling(2),
-  paddingBottom: theme.scaling(3),
-  maxWidth: 1200,
-  margin: '0 auto',
-}));
+const SiteLinks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 
-const SiteLinks = styled(Flex)(({ theme }) => ({
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  & > * {
+    width: 30%;
+    text-align: 'center';
+    margin-top: ${({ theme }) => theme.scaling(1)};
+  }
+`;
 
-  '& > *': {
-    width: '30%',
-    textAlign: 'center',
-    marginTop: theme.scaling(1),
-  },
-}));
-
-const CustomLink = styled(Link)(({ theme }) => ({
-  //color: theme.colors.text.secondary,
-  '&:hover': {
-    color: theme.colors.text.tertiary,
-  },
-}));
+const CustomLink = styled(Link)`
+  &:hover {
+    color: ${({ theme }) => theme.colorss.text.tertiary};
+  }
+`;
 
 const Footer: React.FunctionComponent = () => {
   return (
@@ -56,7 +53,7 @@ const Footer: React.FunctionComponent = () => {
           <CustomLink to="/">Hello</CustomLink>
           <CustomLink to="/">Hello</CustomLink>
         </SiteLinks>
-        <Box>
+        <div>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit
             perspiciatis in nemo ipsam? Est, quibusdam.
@@ -65,7 +62,7 @@ const Footer: React.FunctionComponent = () => {
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit
             perspiciatis in nemo ipsam? Est, quibusdam.
           </p>
-        </Box>
+        </div>
       </FooterContent>
     </FooterContainer>
   );
