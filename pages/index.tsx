@@ -1,8 +1,9 @@
 import React from 'react';
 import { NextPage } from 'next';
+import IndexPage from '../src/components/Home';
 
 const Index: NextPage = () => {
-  return <h1>Index</h1>;
+  return <IndexPage />;
 };
 
 export default Index;

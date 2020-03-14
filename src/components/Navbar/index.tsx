@@ -23,10 +23,6 @@ const NavbarLinks = styled.div`
   display: flex;
   align-items: space-evenly;
   width: 40%;
-
-  & > * {
-    margin: 5px 10px;
-  }
 `;
 
 interface NavbarProps {

@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1, h2, h3,
-  h4, h5, h6 {
+  h4, h5, h6, p {
     margin: 0;
   }
 `;
@@ -44,7 +44,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
           style={{
             margin: '0 auto',
             maxWidth: 1200,
-            padding: '1.0875rem 1.45rem',
+            width: '100%',
           }}
         >
           {children}

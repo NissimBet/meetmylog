@@ -17,15 +17,17 @@ export const StyledLink = styled.a`
 
 export interface CustomLinkProps {
   to: string;
+  className?: string;
 }
 
 const CustomLink: React.FunctionComponent<CustomLinkProps> = ({
   to,
   children,
+  className,
 }) => {
   return (
     <Link href={to} passHref>
-      <StyledLink>{children}</StyledLink>
+      <StyledLink className={className}>{children}</StyledLink>
     </Link>
   );
 };
