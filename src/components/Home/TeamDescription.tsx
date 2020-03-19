@@ -19,7 +19,10 @@ const Team: React.FunctionComponent = () => {
   return (
     <Container>
       <h3>Quienes somos</h3>
-      <p>Somos un grupo de estudiantes que</p>
+      <p>
+        Somos un grupo de estudiantes que Lorem ipsum dolor sit, amet
+        consectetur adipisicing elit. Ipsa, consequatur!
+      </p>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet corrupti
         tenetur facere aperiam nemo dolor!

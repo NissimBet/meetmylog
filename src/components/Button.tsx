@@ -11,28 +11,28 @@ const StyledButton = styled('button')`
   border-radius: 5px;
   border: none;
 
-  margin-top: ${({ theme }) => theme.scaling(1)}px;
-  margin-bottom: ${({ theme }) => theme.scaling(1)}px;
+  margin-top: ${({ theme }) => theme?.scaling(1)}px;
+  margin-bottom: ${({ theme }) => theme?.scaling(1)}px;
 
-  padding-top: ${({ theme }) => theme.scaling(1)}px;
-  padding-bottom: ${({ theme }) => theme.scaling(1)}px;
-  padding-left: ${({ theme }) => theme.scaling(2)}px;
-  padding-right: ${({ theme }) => theme.scaling(2)}px;
+  padding-top: ${({ theme }) => theme?.scaling(1)}px;
+  padding-bottom: ${({ theme }) => theme?.scaling(1)}px;
+  padding-left: ${({ theme }) => theme?.scaling(2)}px;
+  padding-right: ${({ theme }) => theme?.scaling(2)}px;
 
   transition: background-color 0.25s cubic-bezier(0.71, 0.24, 0.39, 0.83);
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.container.secondary};
+    background-color: ${({ theme }) => theme?.colors?.container?.secondary};
   }
 `;
 
 const StyledOutlineButton = styled(StyledButton)`
-  border: ${({ theme }) => theme.borders[0]};
+  border: ${({ theme }) => theme?.borders[0]};
   background-color: transparent;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.text.secondary};
-    background-color: ${({ theme }) => theme.colors.container.secondary + '50'};
+    color: ${({ theme }) => theme?.colors?.text?.tertiary};
+    background-color: ${({ theme }) => theme?.colors?.container?.secondary};
   }
 `;
 

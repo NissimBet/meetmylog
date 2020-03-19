@@ -5,9 +5,11 @@ import NavLink from './NavLink';
 
 const NavbarContainer = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
-  background-color: ${({ theme }) => theme.colors.container.primary};
-  margin-bottom: ${({ theme }) => theme.scaling(1)}px;
+  background-color: ${({ theme }) => theme.colors.container.primary}; 
+  background-color: white;
+  /* margin-bottom: ${({ theme }) => theme.scaling(1)}px; */
   padding: ${({ theme }) => theme.scaling(1)}px;
+  border-bottom: 1px solid #ccc;
 `;
 
 const NavbarContent = styled.div`
@@ -35,7 +37,7 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => (
       <NavbarLinks>
         <NavLink to="/">Inicio</NavLink>
 
-        <NavLink to="/">{siteTitle}</NavLink>
+        <NavLink to="/meeting/123">Meeting test page</NavLink>
       </NavbarLinks>
 
       <Button variant="outline">Login</Button>
