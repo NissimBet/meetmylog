@@ -9,6 +9,7 @@ const IndexPage: NextPage = () => {
     <div>
       <HomeIntro />
 
+      {/* imagen de uso soon */}
       <div
         style={{
           width: '100%',

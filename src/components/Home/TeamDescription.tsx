@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin: 20px 0;
+  /* margin: 20px 0; */
+  background: #ccc2;
+
+  padding: 40px 30px;
+  min-height: 400px;
 
   h3 {
-    margin: 10px 0;
-    line-height: 2;
-    text-decoration: underline black;
+    margin-bottom: 10px;
   }
 
   p {
@@ -20,12 +22,17 @@ const Team: React.FunctionComponent = () => {
     <Container>
       <h3>Quienes somos</h3>
       <p>
-        Somos un grupo de estudiantes que Lorem ipsum dolor sit, amet
-        consectetur adipisicing elit. Ipsa, consequatur!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque omnis
+        similique, repellat ipsum reprehenderit vel illum alias. Odio
+        voluptatibus tenetur a autem distinctio beatae expedita alias? Quasi
+        facilis optio quidem?
       </p>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet corrupti
-        tenetur facere aperiam nemo dolor!
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit, dolores
+        quam eaque in consectetur sequi officia voluptate? Laudantium distinctio
+        aut quis, incidunt nam iste laboriosam? Accusamus sint quos laborum
+        necessitatibus. Nesciunt modi ipsum est quidem tenetur, assumenda sunt
+        itaque iure fuga hic sed aperiam et quo explicabo veritatis esse omnis.
       </p>
     </Container>
   );

@@ -1,9 +1,17 @@
 import React from 'react';
 import { NextPage } from 'next';
 import IndexPage from '../src/components/Home';
+import Head from 'next/head';
 
 const Index: NextPage = () => {
-  return <IndexPage />;
+  return (
+  <React.Fragment>
+    <Head>
+      <title>Log Your Meetings</title>
+    </Head>
+    <IndexPage />;
+
+  </React.Fragment>)
 };
 
 export default Index;
