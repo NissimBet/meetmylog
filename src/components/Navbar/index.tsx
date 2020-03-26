@@ -2,14 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from './../Button';
 import NavLink from './NavLink';
+import { useRouter } from 'next/router';
 
 const NavbarContainer = styled.div`
-  color: ${({ theme }) => theme.colors.text.secondary};
-  background-color: ${({ theme }) => theme.colors.container.primary}; 
-  background-color: white;
-  /* margin-bottom: ${({ theme }) => theme.scaling(1)}px; */
-  padding: ${({ theme }) => theme.scaling(1)}px;
-  border-bottom: 1px solid #ccc;
+  padding: 20px 0px;
+
+  box-shadow: 0 0 4px 2px #0003;
 `;
 
 const NavbarContent = styled.div`
@@ -31,19 +29,24 @@ interface NavbarProps {
   siteTitle: string;
 }
 
-const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => (
-  <NavbarContainer>
-    <NavbarContent>
-      <NavbarLinks>
-        <NavLink to="/">Inicio</NavLink>
+const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
+  const router = useRouter();
 
-        <NavLink to="/meeting/123">Meeting test page</NavLink>
-      </NavbarLinks>
+  return (
+    <NavbarContainer>
+      <NavbarContent>
+        <NavbarLinks>
+          <NavLink to="/">Inicio</NavLink>
 
-      <Button variant="outline">Login</Button>
-    </NavbarContent>
-  </NavbarContainer>
-);
+          <NavLink to="/meeting/123">Meeting test page</NavLink>
+        </NavbarLinks>
+
+        <Button variant="outline">Login</Button>
+        <NavLink to="/registro">Registrate</NavLink>
+      </NavbarContent>
+    </NavbarContainer>
+  );
+};
 
 Navbar.defaultProps = {
   siteTitle: ``,

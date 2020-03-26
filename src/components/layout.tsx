@@ -31,7 +31,7 @@ const PageLayout = styled.div`
   min-height: 100%;
 
   /* background-color: #ccc2; */
-  background-color: ${({ theme }) => theme.colors.container.secondary};
+  /* background-color: ${({ theme }) => theme.colors.container.secondary}; */
 `;
 
 const PageContent = styled.div`
@@ -39,9 +39,9 @@ const PageContent = styled.div`
   margin: 20px auto;
   max-width: 1200px;
   width: 100%;
-  background-color: white;
+  /* background-color: white; */
 
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
 `;
 
 const Layout: React.FunctionComponent = ({ children }) => {

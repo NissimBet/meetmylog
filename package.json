@@ -13,10 +13,13 @@
   "license": "ISC",
   "dependencies": {
     "@types/styled-components": "^5.0.1",
+    "@types/yup": "^0.26.33",
+    "formik": "^2.1.4",
     "next": "^9.3.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "yup": "^0.28.3"
   },
   "devDependencies": {
     "@types/node": "^13.9.2",

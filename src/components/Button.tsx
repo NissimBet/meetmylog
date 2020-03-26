@@ -43,22 +43,30 @@ const StyledOutlineButton = styled(StyledButton)`
 interface ButtonProps {
   variant?: 'outline';
   className?: string;
+  onClick?: () => void;
+  type?: 'button' | 'reset' | 'submit';
 }
 
 const Button: React.FunctionComponent<ButtonProps> = ({
   children,
   variant,
   className,
+  onClick,
+  ...props
 }) => {
   if (variant === 'outline') {
     return (
-      <StyledOutlineButton className={className}>
+      <StyledOutlineButton className={className} onClick={onClick} {...props}>
         {children}
       </StyledOutlineButton>
     );
   }
 
-  return <StyledButton className={className}>{children}</StyledButton>;
+  return (
+    <StyledButton className={className} onClick={onClick} {...props}>
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;
