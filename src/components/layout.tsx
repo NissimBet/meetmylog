@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 
 import { theme } from '../utils/theme';
+import { useRouter } from 'next/router';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -34,6 +35,10 @@ const PageLayout = styled.div`
   /* background-color: ${({ theme }) => theme.colors.container.secondary}; */
 `;
 
+const MeetingPageContent = styled.div`
+  width: 100%;
+`;
+
 const PageContent = styled.div`
   padding: 10px 20px;
   margin: 20px auto;
@@ -45,12 +50,18 @@ const PageContent = styled.div`
 `;
 
 const Layout: React.FunctionComponent = ({ children }) => {
+  const router = useRouter();
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <PageLayout>
         <Navbar siteTitle="Meet my log" />
-        <PageContent>{children}</PageContent>
+
+        {router.route.match(/\/meeting\/./) ? (
+          <MeetingPageContent>{children}</MeetingPageContent>
+        ) : (
+          <PageContent>{children}</PageContent>
+        )}
         <Footer />
       </PageLayout>
     </ThemeProvider>

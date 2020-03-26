@@ -13,6 +13,7 @@ export interface ChatData {
   text: string;
   author: string;
   userId: string;
+  id: string;
 }
 
 interface ChatBubbleProps extends ChatData {

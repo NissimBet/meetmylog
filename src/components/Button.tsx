@@ -1,6 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export const NoStyledButton = styled.button`
+  background-color: transparent;
+  color: black;
+
+  cursor: pointer;
+  border: none;
+  outline: none;
+`;
+
 const StyledButton = styled('button')`
   /* color: ${({ theme }) => theme.colors.text.primary}; */
   /* background-color: ${({ theme }) => theme.colors.container.secondary}; */

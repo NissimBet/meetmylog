@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from './../Button';
+
 import NavLink from './NavLink';
 import { useRouter } from 'next/router';
 
@@ -36,12 +36,10 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
     <NavbarContainer>
       <NavbarContent>
         <NavbarLinks>
-          <NavLink to="/">Inicio</NavLink>
-
+          <NavLink to="/">{siteTitle}</NavLink>
           <NavLink to="/meeting/123">Meeting test page</NavLink>
         </NavbarLinks>
 
-        <Button variant="outline">Login</Button>
         <NavLink to="/registro">Registrate</NavLink>
         <NavLink to="/login">Inicia Sesión</NavLink>
       </NavbarContent>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ChatInput from './ChatInput';
@@ -30,20 +30,20 @@ const Bubble = styled(ChatBubble)<{ self: boolean }>`
 `;
 
 const chats: Array<ChatData> = [
-  { text: 'Hi', author: 'Nissim', userId: 'NB' },
-  { text: 'How are you', author: 'Nissim', userId: 'NB' },
+  { id: '1', text: 'Hi', author: 'Nissim', userId: 'NB' },
+  { id: '2', text: 'How are you', author: 'Nissim', userId: 'NB' },
 
-  { text: 'How are you', author: 'Nissim', userId: 'NB' },
-  { text: "I'm fine", author: 'Alex', userId: 'AL' },
-  { text: 'Hi', author: 'Nissim', userId: 'NB' },
+  { id: '3', text: 'How are you', author: 'Nissim', userId: 'NB' },
+  { id: '5', text: "I'm fine", author: 'Alex', userId: 'AL' },
+  { id: '4', text: 'Hi', author: 'Nissim', userId: 'NB' },
 
-  { text: 'How are you', author: 'Nissim', userId: 'NB' },
-  { text: "I'm fine", author: 'Alex', userId: 'AL' },
-  { text: 'Hi', author: 'Nissim', userId: 'NB' },
-  { text: 'How are you', author: 'Nissim', userId: 'NB' },
-  { text: "I'm fine", author: 'Alex', userId: 'AL' },
-  { text: 'Hi', author: 'Nissim', userId: 'NB' },
-  { text: 'How are you', author: 'Nissim', userId: 'NB' },
+  { id: '6', text: 'How are you', author: 'Nissim', userId: 'NB' },
+  { id: '7', text: "I'm fine", author: 'Alex', userId: 'AL' },
+  { id: '8', text: 'Hi', author: 'Nissim', userId: 'NB' },
+  { id: '9', text: 'How are you', author: 'Nissim', userId: 'NB' },
+  { id: '10', text: "I'm fine", author: 'Alex', userId: 'AL' },
+  { id: '11', text: 'Hi', author: 'Nissim', userId: 'NB' },
+  { id: '12', text: 'How are you', author: 'Nissim', userId: 'NB' },
 ];
 
 interface MeetingChatProps {
@@ -53,16 +53,29 @@ interface MeetingChatProps {
 const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
   className,
 }) => {
+  const [messages, setMessages] = useState<ChatData[]>(chats);
   return (
     <MeetingChatContainer className={className}>
       <Container>
         <ChatContainer>
-          {chats.map(data => (
-            <Bubble {...data} key={data.text} self={data.userId === 'NB'} />
+          {messages.map(data => (
+            <Bubble {...data} key={data.id} self={data.userId === 'NB'} />
           ))}
         </ChatContainer>
       </Container>
-      <ChatInput />
+      <ChatInput
+        handleSubmit={value =>
+          setMessages([
+            ...messages,
+            {
+              author: 'Nissim',
+              id: String(+messages[messages.length - 1].id + 1),
+              text: value,
+              userId: 'NB',
+            },
+          ])
+        }
+      />
     </MeetingChatContainer>
   );
 };
