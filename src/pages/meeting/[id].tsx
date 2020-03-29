@@ -1,7 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import MeetingPage from '../../src/components/Meeting';
+import MeetingPage from '../../components/Meeting';
 
 const Meeting: NextPage = () => {
   return (

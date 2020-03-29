@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { Formik, validateYupSchema } from 'formik';
 import styled from 'styled-components';
-import Button from '../src/components/Button';
+import Button from '../components/Button';
 
 import { object, string } from 'yup';
 

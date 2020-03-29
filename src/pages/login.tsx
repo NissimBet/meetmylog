@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { NextPage } from 'next';
 import { object, string } from 'yup';
 import { Formik } from 'formik';
-import Button from '../src/components/Button';
+import Button from '../components/Button';
 
 const FormContent = styled.div`
   display: flex;
