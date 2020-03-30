@@ -30,14 +30,12 @@ interface NavbarProps {
 }
 
 const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
-  const router = useRouter();
-
   return (
     <NavbarContainer>
       <NavbarContent>
         <NavbarLinks>
           <NavLink to="/">{siteTitle}</NavLink>
-          <NavLink to="/meeting/123">Meeting test page</NavLink>
+          <NavLink to="/meeting/ongoing/123">Meeting test page</NavLink>
         </NavbarLinks>
 
         <NavLink to="/registro">Registrate</NavLink>

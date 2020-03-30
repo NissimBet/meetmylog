@@ -57,7 +57,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
       <PageLayout>
         <Navbar siteTitle="Meet my log" />
 
-        {router.route.match(/\/meeting\/./) ? (
+        {router.route.match(/\/meeting\/ongoing\/./) ? (
           <MeetingPageContent>{children}</MeetingPageContent>
         ) : (
           <PageContent>{children}</PageContent>

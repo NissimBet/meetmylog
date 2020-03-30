@@ -1,6 +1,6 @@
-import React, { useRef, useState, useCallback, useReducer } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Formik, validateYupSchema } from 'formik';
+import { Formik } from 'formik';
 import { NoStyledButton } from '../../Button';
 import { object, string } from 'yup';
 
