@@ -5,11 +5,12 @@ import PageLayout from '../components/Layout';
 
 class MyApp extends NextApp {
   render() {
-    const { Component } = this.props;
+    const { Component, pageProps } = this.props;
+
     return (
       <React.Fragment>
         <PageLayout>
-          <Component />
+          <Component {...pageProps} />
         </PageLayout>
       </React.Fragment>
     );
