@@ -45,7 +45,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
             <div>
               <h1>Your are a member of</h1>
 
-              <GroupsList groups={groups.member} />
+              <GroupsList groups={groups.member} columns={2} />
             </div>
           )}
           {groups?.leader && (
@@ -68,13 +68,29 @@ export const getServerSideProps: GetServerSideProps = async ({}) => {
       { name: 'meeting 1' },
       { name: 'meeting 2' },
       { name: 'meeting 3' },
+      { name: 'meeting 4' },
+      { name: 'meeting 5' },
+      { name: 'meeting 6' },
+      { name: 'meeting 7' },
+      { name: 'meeting 8' },
+      { name: 'meeting 9' },
     ],
     groups: {
-      leader: [{ name: 'Group 1' }, { name: 'Group 4' }],
-      member: [{ name: 'Group 2' }, { name: 'Group 3' }, { name: 'Group 5' }],
+      leader: [
+        { name: 'Group 1' },
+        { name: 'Group 4' },
+        { name: 'Group 7' },
+        { name: 'Group 8' },
+      ],
+      member: [
+        { name: 'Group 2' },
+        { name: 'Group 3' },
+        { name: 'Group 5' },
+        { name: 'Group 6' },
+      ],
     },
   };
-  console.log(userData);
+
   return { props: { userData } };
 };
 
