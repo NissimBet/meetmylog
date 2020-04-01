@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { Formik, validateYupSchema } from 'formik';
 import styled from 'styled-components';
 import Button from '../components/Button';
+import { Error, Label, Input } from './../components/Form';
 
 import { object, string } from 'yup';
 
@@ -11,6 +12,10 @@ const FormContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  ${Error} {
+    align-self: flex-end;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -20,27 +25,14 @@ const InputContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin: 10px 0;
-`;
 
-const Label = styled.label`
-  flex: 1;
-`;
+  ${Label} {
+    flex: 2;
+  }
 
-const Input = styled.input`
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-
-  font-size: 1em;
-  flex: 2;
-`;
-const Error = styled.div`
-  align-self: flex-end;
-  color: #aa3132;
-  border: 1px solid #cc8888;
-  background: #eecccc;
-  padding: 5px 10px;
-  margin-bottom: 5px;
-  border-radius: 10px;
+  ${Input} {
+    flex: 3;
+  }
 `;
 
 const FormValidation = object().shape({
