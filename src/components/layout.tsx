@@ -1,11 +1,12 @@
 import React from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { useRouter } from 'next/router';
 
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 import { theme } from '../utils/theme';
-import { useRouter } from 'next/router';
+import LoginProvider from './../hooks/login';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -53,17 +54,19 @@ const Layout: React.FunctionComponent = ({ children }) => {
   const router = useRouter();
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <PageLayout>
-        <Navbar siteTitle="Meet my log" />
+      <LoginProvider>
+        <GlobalStyle />
+        <PageLayout>
+          <Navbar siteTitle="Meet my log" />
 
-        {router.route.match(/\/meeting\/ongoing\/./) ? (
-          <MeetingPageContent>{children}</MeetingPageContent>
-        ) : (
-          <PageContent>{children}</PageContent>
-        )}
-        <Footer />
-      </PageLayout>
+          {router.route.match(/\/meeting\/ongoing\/./) ? (
+            <MeetingPageContent>{children}</MeetingPageContent>
+          ) : (
+            <PageContent>{children}</PageContent>
+          )}
+          <Footer />
+        </PageLayout>
+      </LoginProvider>
     </ThemeProvider>
   );
 };

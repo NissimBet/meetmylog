@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import NavLink from './NavLink';
-import { useRouter } from 'next/router';
+import { useLoginContext } from '../../hooks/login';
+import Button from '../Button';
 
 const NavbarContainer = styled.div`
   padding: 20px 0px;
@@ -29,6 +30,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
+  const { userId, logout } = useLoginContext();
   return (
     <NavbarContainer>
       <NavbarContent>
@@ -42,6 +44,7 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
           <NavLink to="/registro">Registrate</NavLink>
           <NavLink to="/login">Inicia Sesión</NavLink>
         </NavbarLinks>
+        {userId && <Button onClick={logout}>Logout</Button>}
       </NavbarContent>
     </NavbarContainer>
   );

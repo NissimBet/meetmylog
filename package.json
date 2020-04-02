@@ -15,9 +15,12 @@
     "@types/styled-components": "^5.0.1",
     "@types/yup": "^0.26.33",
     "formik": "^2.1.4",
+    "js-cookie": "^2.2.1",
     "next": "^9.3.2",
+    "next-cookies": "^2.0.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-use": "^13.27.1",
     "styled-components": "^5.0.1",
     "yup": "^0.28.3"
   },

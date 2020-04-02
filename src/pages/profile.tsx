@@ -3,6 +3,9 @@ import { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { PersonalMeetings, GroupsList } from '../components/Profile';
+import { withAuthSync, auth } from '../utils/authentication';
+import nextCookie from 'next-cookies';
+import Router from 'next/router';
 
 const Container = styled.div`
   display: grid;
@@ -61,7 +64,18 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({}) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { token } = nextCookie(ctx);
+
+  if (!token) {
+    if (typeof window === 'undefined') {
+      ctx.res?.writeHead(302, { Location: '/login' });
+      ctx.res?.end();
+    } else {
+      Router.push('/login');
+    }
+  }
+
   const userData = {
     username: 'John Doe',
     meetings: [

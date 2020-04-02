@@ -6,6 +6,7 @@ import { object, string } from 'yup';
 import { Formik } from 'formik';
 import Button from '../components/Button';
 import { Error, Label, Input } from './../components/Form';
+import { useLoginContext } from '../hooks/login';
 
 const FormContent = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const FormValidation = object().shape({
 });
 
 const LoginPage: NextPage = () => {
+  const { login } = useLoginContext();
   return (
     <React.Fragment>
       <Head>
@@ -64,7 +66,7 @@ const LoginPage: NextPage = () => {
             username: '',
             password: '',
           }}
-          onSubmit={values => console.log(values)}
+          onSubmit={values => login(values.username, values.password)}
           validationSchema={FormValidation}
           validateOnBlur
         >
