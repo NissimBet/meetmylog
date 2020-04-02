@@ -22,7 +22,6 @@ const NavbarContent = styled.div`
 const NavbarLinks = styled.div`
   display: flex;
   align-items: space-evenly;
-  width: 40%;
 `;
 
 interface NavbarProps {
@@ -36,10 +35,13 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
         <NavbarLinks>
           <NavLink to="/">{siteTitle}</NavLink>
           <NavLink to="/meeting/ongoing/123">Meeting test page</NavLink>
+          <NavLink to="/meeting/new">Meeting creation page</NavLink>
+          <NavLink to="/profile">Profile Page</NavLink>
         </NavbarLinks>
-
-        <NavLink to="/registro">Registrate</NavLink>
-        <NavLink to="/login">Inicia Sesión</NavLink>
+        <NavbarLinks>
+          <NavLink to="/registro">Registrate</NavLink>
+          <NavLink to="/login">Inicia Sesión</NavLink>
+        </NavbarLinks>
       </NavbarContent>
     </NavbarContainer>
   );
