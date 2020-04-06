@@ -1,9 +1,11 @@
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import Router from 'next/router';
+import axios from 'axios';
 
 import { NextPageContext, NextPage } from 'next';
 import { useEffect } from 'react';
+import { BACKEND_URI } from './config';
 
 export const auth = (ctx: NextPageContext) => {
   const { token } = nextCookie(ctx);
@@ -34,41 +36,27 @@ export const logout = () => {
   /* Router.push('/login'); */
 };
 
-interface UserLogin {
-  email: string;
-  password: string;
-}
-
-async function executeLoginRequest(credentials: UserLogin) {
-  /**
-   * Do Login magic
-   */
-  const response = true;
-
-  return response; // JWT
-}
-
 export const login = async (email: string, password: string) => {
   // ask for login to server
-  const loginStatus = await executeLoginRequest({ email, password });
-
-  /* const loginStatus = await fetch(`${BACKEND_ROOT_URL}/login`, {
-    method: 'POST',
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+  const loginData = await axios.post(
+    `${BACKEND_URI}/user/login`,
+    {
+      email,
+      password,
     },
-  }); */
+    {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 
-  //if (loginStatus.status === 201) {
-  if (loginStatus) {
-    cookie.set('token', email);
-    Router.push('/');
+  if (loginData.status === 200) {
+    cookie.set('token', loginData.data.token);
+    return loginData.data;
   }
+  return null;
 };
 
 export const withAuthSync = (WrappedComponent: NextPage) => {

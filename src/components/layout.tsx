@@ -64,7 +64,6 @@ const Layout: React.FunctionComponent = ({ children }) => {
           ) : (
             <PageContent>{children}</PageContent>
           )}
-          <Footer />
         </PageLayout>
       </LoginProvider>
     </ThemeProvider>

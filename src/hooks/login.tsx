@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useEffect } from 'react';
+import React, { useContext, useReducer, useEffect, useDebugValue } from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import cookie from 'js-cookie';
 import Router from 'next/router';
@@ -54,14 +54,17 @@ export function useLoginContext() {
   }
 
   // inicio de sesion
-  function login(userIdentifier: string, userPassword: string) {
-    dispatch &&
-      dispatch({
-        type: LoginActionTypes.Login,
-        payload: { userToken: userIdentifier },
-      });
-    // funcion de inicio de sesion, llama al api con las credenciales
-    authLogin(userIdentifier, userPassword);
+  async function login(userIdentifier: string, userPassword: string) {
+    const userData = await authLogin(userIdentifier, userPassword);
+
+    if (userData) {
+      dispatch &&
+        dispatch({
+          type: LoginActionTypes.Login,
+          payload: { userToken: userData.userId },
+        });
+      Router.push('/');
+    }
   }
 
   // cada que cambia el token del usuario, almacenar el token en localstorage
@@ -83,6 +86,7 @@ function reducer(state: LoginState, action: LoginAction): LoginState {
     case LoginActionTypes.Login:
       if (action.payload) {
         const userToken = action.payload.userToken;
+
         return { ...state, userToken };
       }
       return { ...state };

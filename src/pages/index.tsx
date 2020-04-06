@@ -9,7 +9,7 @@ const Index: NextPage = () => {
       <Head>
         <title>Log Your Meetings</title>
       </Head>
-      <IndexPage />;
+      <IndexPage />
     </React.Fragment>
   );
 };
