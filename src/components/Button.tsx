@@ -53,6 +53,7 @@ interface ButtonProps {
   variant?: 'outline';
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
   type?: 'button' | 'reset' | 'submit';
 }
 

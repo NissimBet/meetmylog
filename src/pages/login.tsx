@@ -36,8 +36,9 @@ const InputContainer = styled.div`
 `;
 
 const FormValidation = object().shape({
-  username: string()
-    .min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo')
+  email: string()
+    //.min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo')
+    .email('Por favor ingrese un correo válido')
     .required('Por favor ingrese su nombre de usuario'),
   password: string()
     .required('Favor de ingresar su contraseña')
@@ -63,10 +64,19 @@ const LoginPage: NextPage = () => {
         <h1>Inicia Sesión</h1>
         <Formik
           initialValues={{
-            username: '',
+            email: '',
             password: '',
           }}
-          onSubmit={values => login(values.username, values.password)}
+          onSubmit={(values, actions) => {
+            actions.setSubmitting(true);
+            login(values.email, values.password)
+              .then(val => {
+                actions.setSubmitting(false);
+              })
+              .catch(data => {
+                console.log(data);
+              });
+          }}
           validationSchema={FormValidation}
           validateOnBlur
         >
@@ -77,25 +87,24 @@ const LoginPage: NextPage = () => {
             errors,
             touched,
             handleBlur,
+            isSubmitting,
           }) => (
             <form onSubmit={handleSubmit}>
               <FormContent>
                 <InputContainer>
-                  <Label htmlFor="username">Nombre de Usuario</Label>
+                  <Label htmlFor="email">Correo electrónico</Label>
                   <Input
-                    type="text"
-                    name="username"
-                    id="username"
+                    type="email"
+                    name="email"
+                    id="email"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.username}
+                    value={values.email}
                     autoFocus
                   />
                 </InputContainer>
 
-                {errors.username && touched.username && (
-                  <Error>{errors.username}</Error>
-                )}
+                {errors.email && touched.email && <Error>{errors.email}</Error>}
 
                 <InputContainer>
                   <Label htmlFor="password">Contraseña</Label>
@@ -113,7 +122,9 @@ const LoginPage: NextPage = () => {
                 )}
               </FormContent>
 
-              <Button type="submit">Enviar</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                Enviar
+              </Button>
             </form>
           )}
         </Formik>

@@ -38,25 +38,29 @@ export const logout = () => {
 
 export const login = async (email: string, password: string) => {
   // ask for login to server
-  const loginData = await axios.post(
-    `${BACKEND_URI}/user/login`,
-    {
-      email,
-      password,
-    },
-    {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+  try {
+    const loginData = await axios.post(
+      `${BACKEND_URI}/user/login`,
+      {
+        email,
+        password,
       },
-    }
-  );
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
-  if (loginData.status === 200) {
-    cookie.set('token', loginData.data.token);
-    return loginData.data;
+    if (loginData.status === 200) {
+      cookie.set('token', loginData.data.token);
+      return loginData.data;
+    }
+    return null;
+  } catch (error) {
+    throw Error(error);
   }
-  return null;
 };
 
 export const withAuthSync = (WrappedComponent: NextPage) => {

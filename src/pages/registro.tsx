@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { Formik, validateYupSchema } from 'formik';
@@ -7,6 +7,9 @@ import Button from '../components/Button';
 import { Error, Label, Input } from './../components/Form';
 
 import { object, string } from 'yup';
+import axios from 'axios';
+import { BACKEND_URI } from '../utils/config';
+import Router from 'next/router';
 
 const FormContent = styled.div`
   display: flex;
@@ -37,7 +40,7 @@ const InputContainer = styled.div`
 
 const FormValidation = object().shape({
   username: string()
-    .min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo')
+    //.min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo')
     .required('Por favor ingrese su nombre de usuario'),
   email: string()
     .email('Favor ingresa un correo válido')
@@ -54,6 +57,7 @@ const FormValidation = object().shape({
 });
 
 const PaginaRegistro: NextPage = () => {
+  const [serverError, setServerError] = useState('');
   return (
     <React.Fragment>
       <Head>
@@ -75,7 +79,26 @@ const PaginaRegistro: NextPage = () => {
             password: '',
             confirmPassword: '',
           }}
-          onSubmit={values => console.log(values)}
+          onSubmit={(values, actions) => {
+            actions.setSubmitting(true);
+            setServerError('');
+            const { email, password, username } = values;
+            axios
+              .post(`${BACKEND_URI}/user/register`, {
+                username,
+                email,
+                password,
+                name: username,
+              })
+              .then(_ => {
+                Router.push('/login');
+                actions.setSubmitting(false);
+              })
+              .catch(data => {
+                setServerError('Username or email in use');
+                actions.setSubmitting(false);
+              });
+          }}
           validationSchema={FormValidation}
           validateOnBlur
         >
@@ -86,6 +109,7 @@ const PaginaRegistro: NextPage = () => {
             errors,
             touched,
             handleBlur,
+            isSubmitting,
           }) => (
             <form onSubmit={handleSubmit}>
               <FormContent>
@@ -155,7 +179,13 @@ const PaginaRegistro: NextPage = () => {
                 )}
               </FormContent>
 
-              <Button type="submit">Enviar</Button>
+              {serverError && (
+                <Error style={{ textAlign: 'center' }}>{serverError}</Error>
+              )}
+
+              <Button type="submit" disabled={isSubmitting}>
+                Enviar
+              </Button>
             </form>
           )}
         </Formik>
