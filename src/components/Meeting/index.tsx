@@ -7,7 +7,7 @@ import MeetingContent from './MeetingContent';
 const MeetingPageContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height: 85vh;
+  height: 100%;
 `;
 
 const MeetingContentContainer = styled(MeetingContent)`

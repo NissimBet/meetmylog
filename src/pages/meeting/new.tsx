@@ -12,6 +12,7 @@ import {
   SelectComponent,
 } from '../../components/Form';
 import { object, string, array } from 'yup';
+import { withAuthSync } from '../../utils/authentication';
 
 const FormContent = styled.div`
   display: flex;
@@ -41,14 +42,16 @@ const InputContainer = styled.div`
 `;
 
 const validation = object().shape({
-  name: string().required('Favor de seleccionar un nombre para la reunión'),
+  meetingName: string().required(
+    'Favor de seleccionar un nombre para la reunión'
+  ),
   share_method: string()
     .oneOf(
-      ['group_name', 'share_link', 'user_names'],
+      ['group_name', 'share_link', 'members'],
       'Favor seleccione una forma de compartir la reunión'
     )
     .required('Favor seleccione una forma de compartir la reunión'),
-  user_names: array().notRequired(),
+  members: array().notRequired(),
   share_link: string().notRequired(),
   group_name: string().notRequired(),
 });
@@ -61,9 +64,9 @@ const CreateMeetingPage: NextPage = () => {
       </Head>
       <Formik
         initialValues={{
-          name: '',
+          meetingName: '',
           share_method: '',
-          user_names: [],
+          members: [],
           share_link: '',
           group_name: '',
         }}
@@ -82,20 +85,21 @@ const CreateMeetingPage: NextPage = () => {
             <h1>Crea tu reunion</h1>
             <FormContent>
               <InputContainer>
-                <Label htmlFor="meeting_name">Nombre de la reunion</Label>
+                <Label htmlFor="meetingName">Nombre de la reunion</Label>
                 <Input
                   type="text"
-                  name="name"
-                  id="meeting_name"
+                  name="meetingName"
+                  id="meetingName"
                   onChange={formikBag.handleChange}
                   onBlur={formikBag.handleBlur}
                   autoFocus
                 />
               </InputContainer>
 
-              {formikBag?.errors.name && formikBag?.touched.name && (
-                <Error>{formikBag.errors.name}</Error>
-              )}
+              {formikBag?.errors.meetingName &&
+                formikBag?.touched.meetingName && (
+                  <Error>{formikBag.errors.meetingName}</Error>
+                )}
 
               <InputContainer>
                 <Label htmlFor="share_method">
@@ -114,7 +118,7 @@ const CreateMeetingPage: NextPage = () => {
                       label: 'Generar link para compartir',
                       value: 'share_link',
                     },
-                    { label: 'Nombres de usuario', value: 'user_names' },
+                    { label: 'Nombres de usuario', value: 'members' },
                   ]}
                 />
               </InputContainer>
@@ -134,7 +138,7 @@ const CreateMeetingPage: NextPage = () => {
                   <div>Este es el link de la reunion</div>
                 </InputContainer>
               )}
-              {formikBag.values.share_method === 'user_names' && (
+              {formikBag.values.share_method === 'members' && (
                 <InputContainer>
                   <div>Ingrese el nombre de los integrantes</div>
                 </InputContainer>
@@ -149,4 +153,4 @@ const CreateMeetingPage: NextPage = () => {
   );
 };
 
-export default CreateMeetingPage;
+export default withAuthSync(CreateMeetingPage);

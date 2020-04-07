@@ -85,14 +85,15 @@ export const withAuthSync = (WrappedComponent: NextPage) => {
   Wrapper.getInitialProps = async ctx => {
     const token = auth(ctx);
 
-    console.log(token);
     if (token) {
-      const isTokenValid = await axios.get(`${BACKEND_URI}/user/token`);
-      if (isTokenValid.status !== 200) {
+      try {
+        await axios.get(`${BACKEND_URI}/user/token`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } catch (error) {
         redirect(ctx);
       }
     } else {
-      console.log('Not logged in');
       redirect(ctx);
     }
 

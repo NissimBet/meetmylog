@@ -15,11 +15,27 @@ import { useLoginContext } from '../hooks/login';
 const Container = styled.div`
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: 3fr 2fr;
-  gap: 40px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 100px 40px;
 `;
 
-const MeetingsList = styled(PersonalMeetings)`
+const OngoingMeetings = styled.div`
+  border: 1px solid #ccc;
+  grid-column: 4 / span 2;
+`;
+
+const EndedMeetings = styled.div`
+  border: 1px solid #ccc;
+  grid-column: 1 / span 3;
+`;
+
+const MemberGroups = styled.div`
+  border: 1px solid #ccc;
+  grid-column: 3 / span 3;
+`;
+
+const LeaderGroups = styled.div`
+  border: 1px solid #ccc;
   grid-column: 1 / span 2;
 `;
 
@@ -27,36 +43,8 @@ interface ProfilePageProps {
   token: string;
 }
 
-interface UserData {
-  _id: string;
-  email: string;
-  username: string;
-  name: string;
-  userId: string;
-}
-interface MeetingData {
-  _id: string;
-  meetingId: string;
-  meetingName: string;
-  startedDate: string;
-  finishedDate: string;
-  ongoing: boolean;
-  creator: string;
-  chat: string[];
-  members: string[];
-}
-
-interface GroupData {
-  _id: string;
-  groupId: string;
-  name: string;
-  creator: string;
-  members: string[];
-  meetings: string[];
-}
-
 const ProfilePage: NextPage<ProfilePageProps> = props => {
-  const token = cookies.get('token');
+  const token = props.token || '';
 
   const { userId } = useLoginContext();
 
@@ -110,26 +98,45 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
           <h1>{data.username}</h1>
 
           <Container>
-            {meetings && <MeetingsList meetings={meetings} />}
+            {meetings && (
+              <EndedMeetings>
+                <h1>Ended Meetings</h1>
+                <PersonalMeetings
+                  cols={3}
+                  meetings={meetings.filter(meeting => !meeting.ongoing)}
+                />
+              </EndedMeetings>
+            )}
+
+            {meetings && (
+              <OngoingMeetings>
+                <h1>Ongoing Meetings</h1>
+                <PersonalMeetings
+                  cols={2}
+                  meetings={meetings.filter(meeting => meeting.ongoing)}
+                />
+              </OngoingMeetings>
+            )}
 
             {groups && (
-              <div>
+              <LeaderGroups>
+                <h1>Your are a leader of</h1>
+
+                <GroupsList
+                  groups={groups.filter(group => group.creator === data._id)}
+                />
+              </LeaderGroups>
+            )}
+
+            {groups && (
+              <MemberGroups>
                 <h1>Your are a member of</h1>
 
                 <GroupsList
                   groups={groups.filter(group => group.creator !== data._id)}
                   columns={2}
                 />
-              </div>
-            )}
-            {groups && (
-              <div>
-                <h1>Your are a leader of</h1>
-
-                <GroupsList
-                  groups={groups.filter(group => group.creator === data._id)}
-                />
-              </div>
+              </MemberGroups>
             )}
           </Container>
         </div>
