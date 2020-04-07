@@ -13,14 +13,14 @@ const MeetingPageContainer = styled.div`
 const MeetingContentContainer = styled(MeetingContent)`
   flex: 5;
   border: 1px solid black;
-  min-height: 100%;
+  height: 100%;
 `;
 
 const MeetingChatContainer = styled(MeetingChat)`
   flex: 2;
   border: 1px solid red;
   min-width: 400px;
-  min-height: 100%;
+  height: 100%;
 `;
 
 const MeetingPage: React.FunctionComponent = () => {

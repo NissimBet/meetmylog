@@ -26,6 +26,7 @@
     "yup": "^0.28.3"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.10.38",
     "@types/node": "^13.9.2",
     "@types/react": "^16.9.23",
     "babel-plugin-styled-components": "^1.10.7",
