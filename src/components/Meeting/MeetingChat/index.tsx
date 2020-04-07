@@ -4,6 +4,7 @@ import axios from 'axios';
 import ChatInput from './ChatInput';
 import ChatBubble from './ChatBubble';
 import { BACKEND_URI } from '../../../utils/config';
+import { useLoginContext } from '../../../hooks/login';
 
 const MeetingChatContainer = styled.div`
   display: flex;
@@ -45,12 +46,17 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
   userToken,
 }) => {
   const [messages, setMessages] = useState<Chat[]>(chat);
+  const { userId } = useLoginContext();
   return (
     <MeetingChatContainer className={className}>
       <Container>
         <ChatContainer>
           {messages.map(data => (
-            <Bubble {...data} key={data._id} self={data.from === creator._id} />
+            <Bubble
+              {...data}
+              key={data._id}
+              self={data.from.userId === userId}
+            />
           ))}
         </ChatContainer>
       </Container>

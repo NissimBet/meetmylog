@@ -21,7 +21,7 @@ interface MeetingCreator extends Omit<UserData, 'email'> {}
 
 interface Chat {
   _id: string;
-  from: string;
+  from: Omit<UserData, 'email'>;
   message: string;
   timeSent: string;
 }
