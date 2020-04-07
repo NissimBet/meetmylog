@@ -12,9 +12,18 @@ interface MeetingData {
   startedDate: string;
   finishedDate: string;
   ongoing: boolean;
-  creator: Omit<UserData, 'email'>;
-  chat: Omit<UserData, 'email'>[];
+  creator: MeetingCreator;
+  chat: Chat[];
   members: string[];
+}
+
+interface MeetingCreator extends Omit<UserData, 'email'> {}
+
+interface Chat {
+  _id: string;
+  from: string;
+  message: string;
+  timeSent: string;
 }
 
 interface GroupData {

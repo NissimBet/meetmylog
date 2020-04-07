@@ -12,21 +12,29 @@ const MeetingPageContainer = styled.div`
 
 const MeetingContentContainer = styled(MeetingContent)`
   flex: 5;
-  border: 1px solid black;
+
   height: 100%;
 `;
 
 const MeetingChatContainer = styled(MeetingChat)`
   flex: 2;
-  border: 1px solid red;
+
   min-width: 400px;
   height: 100%;
 `;
 
-const MeetingPage: React.FunctionComponent = () => {
+const MeetingPage: React.FunctionComponent<MeetingData & {
+  token: string;
+}> = props => {
+  const { chat, creator, meetingId, token } = props;
   return (
     <MeetingPageContainer>
-      <MeetingChatContainer />
+      <MeetingChatContainer
+        chat={chat}
+        creator={creator}
+        meetingId={meetingId}
+        userToken={token}
+      />
       <MeetingContentContainer />
     </MeetingPageContainer>
   );

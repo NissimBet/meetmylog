@@ -5,10 +5,13 @@ import { NoStyledButton } from '../../Button';
 import { object, string } from 'yup';
 
 const Container = styled.div`
-  border: 1px solid green;
+  box-shadow: 0px -2px 10px 6px #0002;
+  background-color: #999;
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  padding: 10px;
 `;
 const Textarea = styled.textarea`
   font-family: inherit;
@@ -24,10 +27,11 @@ const Textarea = styled.textarea`
   resize: none;
 
   /* margin: 20px 10px; */
-  padding: 5px;
+  padding: 10px;
+  border-radius: 10px;
 
   line-height: 1;
-  border: 1px solid black;
+  /*   border: 1px solid black; */
   /* flex: 3; */
   width: 100%;
 

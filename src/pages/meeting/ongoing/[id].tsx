@@ -36,7 +36,11 @@ const Meeting: NextPage<{ token: string }> = props => {
       <Head>
         <title>{meetingData ? meetingData.meetingName : 'Cargando'}</title>
       </Head>
-      {meetingData ? <MeetingPage /> : <h1>Cargando ...</h1>}
+      {meetingData ? (
+        <MeetingPage {...meetingData} token={token} />
+      ) : (
+        <h1>Cargando ...</h1>
+      )}
     </React.Fragment>
   );
 };

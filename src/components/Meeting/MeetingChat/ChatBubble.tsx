@@ -9,24 +9,17 @@ const Bubble = styled.div`
   max-width: 75%;
 `;
 
-export interface ChatData {
-  text: string;
-  author: string;
-  userId: string;
-  id: string;
-}
-
-interface ChatBubbleProps extends ChatData {
+interface ChatBubbleProps extends Chat {
   className?: string;
 }
 
 const ChatBubble: React.FunctionComponent<ChatBubbleProps> = ({
   className,
-  text,
+  ...props
 }) => {
   return (
     <Bubble className={className}>
-      <p>{text}</p>
+      <p>{props.message}</p>
     </Bubble>
   );
 };
