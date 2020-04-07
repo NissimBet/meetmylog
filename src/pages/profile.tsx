@@ -3,6 +3,7 @@ import { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import styled from 'styled-components';
 import nextCookie from 'next-cookies';
+import cookies from 'js-cookie';
 import Router from 'next/router';
 import axios from 'axios';
 
@@ -55,6 +56,8 @@ interface GroupData {
 }
 
 const ProfilePage: NextPage<ProfilePageProps> = props => {
+  const token = cookies.get('token');
+
   const { userId } = useLoginContext();
 
   const [data, setData] = useState<UserData>();
@@ -65,7 +68,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
     axios
       .get(`${BACKEND_URI}/user/get/${userId}`, {
         headers: {
-          Authorization: `Bearer ${props.token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(data => {
@@ -75,7 +78,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
     axios
       .get(`${BACKEND_URI}/meeting/get?id=${userId}`, {
         headers: {
-          Authorization: `Bearer ${props.token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(data => {
@@ -85,7 +88,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
     axios
       .get(`${BACKEND_URI}/group/get?id=${userId}`, {
         headers: {
-          Authorization: `Bearer ${props.token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(data => {
@@ -137,48 +140,4 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { token } = nextCookie(ctx);
-
-  if (!token) {
-    if (typeof window === 'undefined') {
-      ctx.res?.writeHead(302, { Location: '/login' });
-      ctx.res?.end();
-    } else {
-      Router.push('/login');
-    }
-  }
-
-  /* const userData = {
-    username: 'John Doe',
-    meetings: [
-      { name: 'meeting 1' },
-      { name: 'meeting 2' },
-      { name: 'meeting 3' },
-      { name: 'meeting 4' },
-      { name: 'meeting 5' },
-      { name: 'meeting 6' },
-      { name: 'meeting 7' },
-      { name: 'meeting 8' },
-      { name: 'meeting 9' },
-    ],
-    groups: {
-      leader: [
-        { name: 'Group 1' },
-        { name: 'Group 4' },
-        { name: 'Group 7' },
-        { name: 'Group 8' },
-      ],
-      member: [
-        { name: 'Group 2' },
-        { name: 'Group 3' },
-        { name: 'Group 5' },
-        { name: 'Group 6' },
-      ],
-    }, 
-  }; */
-
-  return { props: { token } };
-};
-
-export default ProfilePage;
+export default withAuthSync(ProfilePage);

@@ -87,7 +87,10 @@ export const withAuthSync = (WrappedComponent: NextPage) => {
 
     console.log(token);
     if (token) {
-      // do token validation
+      const isTokenValid = await axios.get(`${BACKEND_URI}/user/token`);
+      if (isTokenValid.status !== 200) {
+        redirect(ctx);
+      }
     } else {
       console.log('Not logged in');
       redirect(ctx);
