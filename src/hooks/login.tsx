@@ -8,7 +8,7 @@ import {
 } from './../utils/authentication';
 
 interface LoginState {
-  userToken: string;
+  userId: string;
 }
 interface LoginContextProps {
   children: React.ReactNode;
@@ -42,7 +42,7 @@ export function useLoginContext() {
   );
 
   // extraer informacion del contexto
-  const userToken = loginContext?.[0].userToken;
+  const userId = loginContext?.[0].userId;
   const dispatch = loginContext?.[1];
 
   // salir de la sesion
@@ -61,7 +61,7 @@ export function useLoginContext() {
       dispatch &&
         dispatch({
           type: LoginActionTypes.Login,
-          payload: { userToken: userData.userId },
+          payload: { userId: userData.userId },
         });
       Router.push('/');
     }
@@ -69,10 +69,10 @@ export function useLoginContext() {
 
   // cada que cambia el token del usuario, almacenar el token en localstorage
   useEffect(() => {
-    if (userToken === userIdLocalStorage) return;
+    if (userId === userIdLocalStorage) return;
 
-    setUserIdLocalStorage(userToken || '');
-  }, [userToken]);
+    setUserIdLocalStorage(userId || '');
+  }, [userId]);
 
   return {
     userId: userIdLocalStorage,
@@ -85,24 +85,26 @@ function reducer(state: LoginState, action: LoginAction): LoginState {
   switch (action.type) {
     case LoginActionTypes.Login:
       if (action.payload) {
-        const userToken = action.payload.userToken;
+        const userId = action.payload.userId;
 
-        return { ...state, userToken };
+        return { ...state, userId: userId };
       }
       return { ...state };
     case LoginActionTypes.Logout:
-      return { userToken: '' };
+      return { userId: '' };
   }
 }
 
 function LoginContext({ children }: LoginContextProps) {
-  const userId = cookie.get('token') || '';
+  const [userId] = useLocalStorage<string>(localStorageId);
   // use reducer es una alternativa a usestate
-  // state => valor del token del usuario
+  // state => valor del id del usuario
   // dispatch => funcion que va a realizar el cambio
   const [state, dispatch] = useReducer(reducer, {
-    userToken: userId,
+    userId: userId,
   });
+
+  /* console.log(userId, state); */
 
   return <Provider value={[state, dispatch]}>{children}</Provider>;
 }

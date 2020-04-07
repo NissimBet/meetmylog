@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import styled from 'styled-components';
-import { PersonalMeetings, GroupsList } from '../components/Profile';
-import { withAuthSync, auth } from '../utils/authentication';
 import nextCookie from 'next-cookies';
 import Router from 'next/router';
+import axios from 'axios';
+
+import { PersonalMeetings, GroupsList } from '../components/Profile';
+import { withAuthSync, auth } from '../utils/authentication';
+import { BACKEND_URI } from '../utils/config';
+import { useLoginContext } from '../hooks/login';
 
 const Container = styled.div`
   display: grid;
@@ -19,47 +23,116 @@ const MeetingsList = styled(PersonalMeetings)`
 `;
 
 interface ProfilePageProps {
-  userData: {
-    username: string;
-    meetings: { name: string }[];
-    groups: {
-      leader: { name: string }[];
-      member: { name: string }[];
-    };
-  };
+  token: string;
+}
+
+interface UserData {
+  _id: string;
+  email: string;
+  username: string;
+  name: string;
+  userId: string;
+}
+interface MeetingData {
+  _id: string;
+  meetingId: string;
+  meetingName: string;
+  startedDate: string;
+  finishedDate: string;
+  ongoing: boolean;
+  creator: string;
+  chat: string[];
+  members: string[];
+}
+
+interface GroupData {
+  _id: string;
+  groupId: string;
+  name: string;
+  creator: string;
+  members: string[];
+  meetings: string[];
 }
 
 const ProfilePage: NextPage<ProfilePageProps> = props => {
-  const {
-    userData: { groups, meetings, username },
-  } = props;
+  const { userId } = useLoginContext();
+
+  const [data, setData] = useState<UserData>();
+  const [meetings, setMeetings] = useState<MeetingData[]>();
+  const [groups, setGroups] = useState<GroupData[]>();
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URI}/user/get/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      })
+      .then(data => {
+        setData(data.data);
+      })
+      .catch(err => console.log(err));
+    axios
+      .get(`${BACKEND_URI}/meeting/get?id=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      })
+      .then(data => {
+        setMeetings(data.data);
+      })
+      .catch(err => console.log(err));
+    axios
+      .get(`${BACKEND_URI}/group/get?id=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      })
+      .then(data => {
+        setGroups(data.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  console.log('data', data);
+  console.log('meetings', meetings);
+  console.log('groups', groups);
   return (
     <React.Fragment>
       <Head>
-        <title>Tu Perfil | {username}</title>
+        <title>{data ? `Tu Perfil | ${data.name}` : 'Cargando'}</title>
       </Head>
-      <div>
-        <h1>{username}</h1>
+      {data ? (
+        <div>
+          <h1>{data.username}</h1>
 
-        <Container>
-          <MeetingsList meetings={meetings} />
+          <Container>
+            {meetings && <MeetingsList meetings={meetings} />}
 
-          {groups?.member && (
-            <div>
-              <h1>Your are a member of</h1>
+            {groups && (
+              <div>
+                <h1>Your are a member of</h1>
 
-              <GroupsList groups={groups.member} columns={2} />
-            </div>
-          )}
-          {groups?.leader && (
-            <div>
-              <h1>Your are a leader of</h1>
+                <GroupsList
+                  groups={groups.filter(group => group.creator !== data._id)}
+                  columns={2}
+                />
+              </div>
+            )}
+            {groups && (
+              <div>
+                <h1>Your are a leader of</h1>
 
-              <GroupsList groups={groups.leader} />
-            </div>
-          )}
-        </Container>
-      </div>
+                <GroupsList
+                  groups={groups.filter(group => group.creator === data._id)}
+                />
+              </div>
+            )}
+          </Container>
+        </div>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </React.Fragment>
   );
 };
@@ -76,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 
-  const userData = {
+  /* const userData = {
     username: 'John Doe',
     meetings: [
       { name: 'meeting 1' },
@@ -102,10 +175,10 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
         { name: 'Group 5' },
         { name: 'Group 6' },
       ],
-    },
-  };
+    }, 
+  }; */
 
-  return { props: { userData } };
+  return { props: { token } };
 };
 
 export default ProfilePage;

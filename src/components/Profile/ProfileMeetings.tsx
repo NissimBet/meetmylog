@@ -13,7 +13,7 @@ const MeetingCard = styled.div`
 `;
 
 interface PersonalMeetingsProps {
-  meetings: { name: string }[];
+  meetings: { meetingName: string; meetingId: string }[];
   className?: string;
 }
 
@@ -24,7 +24,7 @@ const PersonalMeetings: React.FunctionComponent<PersonalMeetingsProps> = ({
   return (
     <MeetingContainer {...props}>
       {meetings.map(meeting => (
-        <MeetingCard key={meeting.name} />
+        <MeetingCard key={meeting.meetingId} />
       ))}
     </MeetingContainer>
   );

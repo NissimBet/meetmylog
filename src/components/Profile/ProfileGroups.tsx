@@ -18,7 +18,7 @@ const GroupItem = styled.p`
 `;
 
 interface ProfileGroupsProps {
-  groups: { name: string }[];
+  groups: { name: string; groupId: string }[];
   columns?: number;
 }
 
@@ -29,7 +29,7 @@ const ProfileGroups: React.FunctionComponent<ProfileGroupsProps> = ({
   return (
     <GroupsList cols={columns}>
       {groups.map(group => (
-        <GroupItem key={group.name}>{group.name}</GroupItem>
+        <GroupItem key={group.groupId}>{group.name}</GroupItem>
       ))}
     </GroupsList>
   );
