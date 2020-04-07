@@ -25,8 +25,9 @@ const MeetingChatContainer = styled(MeetingChat)`
 
 const MeetingPage: React.FunctionComponent<MeetingData & {
   token: string;
+  onChatSubmit: (arg0: Chat) => void;
 }> = props => {
-  const { chat, creator, meetingId, token } = props;
+  const { chat, creator, meetingId, token, onChatSubmit } = props;
   return (
     <MeetingPageContainer>
       <MeetingChatContainer
@@ -34,6 +35,7 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
         creator={creator}
         meetingId={meetingId}
         userToken={token}
+        onChatSubmit={onChatSubmit}
       />
       <MeetingContentContainer />
     </MeetingPageContainer>

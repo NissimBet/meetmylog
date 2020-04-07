@@ -36,6 +36,7 @@ interface MeetingChatProps {
   creator: MeetingCreator;
   meetingId: string;
   userToken: string;
+  onChatSubmit: (arg0: Chat) => void;
 }
 
 const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
@@ -44,14 +45,14 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
   creator,
   meetingId,
   userToken,
+  onChatSubmit,
 }) => {
-  const [messages, setMessages] = useState<Chat[]>(chat);
   const { userId } = useLoginContext();
   return (
     <MeetingChatContainer className={className}>
       <Container>
         <ChatContainer>
-          {messages.map(data => (
+          {chat.map(data => (
             <Bubble
               {...data}
               key={data._id}
@@ -66,7 +67,7 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
             .put(
               `${BACKEND_URI}/meeting/chat/${meetingId}`,
               {
-                from: creator.userId,
+                from: userId,
                 message: value,
               },
               {
@@ -76,8 +77,7 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
               }
             )
             .then(response => {
-              console.log(response);
-              setMessages([...messages, response.data]);
+              onChatSubmit(response.data);
             })
             .catch(err => console.log(err));
         }}

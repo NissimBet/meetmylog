@@ -5,14 +5,17 @@ import MeetingPage from '../../../components/Meeting';
 import { withAuthSync } from '../../../utils/authentication';
 import axios, { AxiosError } from 'axios';
 
-import { useLoginContext } from './../../../hooks/login';
+import io from 'socket.io-client';
+
 import { BACKEND_URI } from '../../../utils/config';
 import { useRouter } from 'next/router';
 
 const Meeting: NextPage<{ token: string }> = props => {
   const { token } = props;
   const [meetingData, setMeetingData] = useState<MeetingData>();
-  const { userId } = useLoginContext();
+  const [chat, setChat] = useState<Chat[]>();
+  const [socket, setSocket] = useState<SocketIOClient.Socket>(null);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -22,22 +25,59 @@ const Meeting: NextPage<{ token: string }> = props => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(data => setMeetingData(data.data))
+      .then(data => {
+        setMeetingData(data.data);
+        setChat([...data.data.chat]);
+      })
       .catch((err: AxiosError) => {
         if (err.response.status === 403) router.replace('/404');
         else if (err.response.status === 401) router.replace('/login');
       });
   }, []);
 
-  console.log(meetingData);
+  useEffect(() => {
+    if (meetingData) {
+      setSocket(io(`${BACKEND_URI}`));
+    }
+
+    return () => {
+      socket?.disconnect();
+    };
+  }, [meetingData]);
+
+  if (socket && meetingData) {
+    socket.on(`message`, (data: Chat) => {
+      setChat([...chat, data]);
+      console.log(data);
+    });
+    socket.on('connect', () => {
+      console.log('connection');
+      socket.emit(
+        'join-room',
+        `meeting-${meetingData.meetingId.substring(
+          meetingData.meetingId.length - 5
+        )}`
+      );
+    });
+  }
 
   return (
     <React.Fragment>
       <Head>
         <title>{meetingData ? meetingData.meetingName : 'Cargando'}</title>
       </Head>
-      {meetingData ? (
-        <MeetingPage {...meetingData} token={token} />
+      {meetingData && chat ? (
+        <MeetingPage
+          {...meetingData}
+          chat={chat}
+          token={token}
+          onChatSubmit={newChat => {
+            if (socket) {
+              socket.emit(`message`, newChat);
+            }
+            setChat([...chat, newChat]);
+          }}
+        />
       ) : (
         <h1>Cargando ...</h1>
       )}

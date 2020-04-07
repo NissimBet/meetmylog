@@ -24,6 +24,7 @@
     "react-markdown": "^4.3.1",
     "react-mde": "^8.2.0",
     "react-use": "^13.27.1",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^5.0.1",
     "yup": "^0.28.3"
   },
@@ -31,6 +32,7 @@
     "@types/draft-js": "^0.10.38",
     "@types/node": "^13.9.2",
     "@types/react": "^16.9.23",
+    "@types/socket.io-client": "^1.4.32",
     "babel-plugin-styled-components": "^1.10.7",
     "husky": "^4.2.3",
     "prettier": "^1.19.1",
