@@ -80,6 +80,7 @@ const Clone = styled.div`
   border: none;
 `;
 
+// validar que el mensaje no este vacio
 const MessageValidation = object().shape({
   message: string().required(),
 });
@@ -93,14 +94,17 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
   className,
   handleSubmit: handleSubmitProp,
 }) => {
+  // crear una referencia a un componente de react
   const divRef = useRef<HTMLDivElement>(null);
+  // state para la altura del textarea
   const [height, setHeight] = useState(0);
   return (
     <Formik
       initialValues={{ message: '' }}
       onSubmit={(values, actions) => {
-        console.log(`se envio ${values.message}`);
+        // enviar mensaje a tarves de la funcion que se paso por prop
         handleSubmitProp && handleSubmitProp(values.message);
+        // borrar datos del textarea
         actions.resetForm();
       }}
       validationSchema={MessageValidation}
@@ -115,38 +119,45 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
                 autoFocus
                 value={values.message}
                 onChange={e => {
-                  // get current message
+                  // sacar el del mensaje
                   const content = values.message;
-                  // so no error happens
+                  // asegurar que no sea nulo
                   if (divRef.current) {
-                    // set text of invisible div
+                    // pegarle el contenido al div invisible
                     divRef.current!.innerHTML = content;
-                    // display div and have it disappear
+                    // aparecer el clon, sin que se muestre
                     divRef.current!.style.visibility = 'hidden';
                     divRef.current!.style.display = 'block';
 
-                    // set height of textarea
+                    // modificar la altura del textarea
                     e.currentTarget.style.height =
                       divRef.current!.offsetHeight + 'px';
-                    // disappear invisible div
+                    // quitar el clon
                     divRef.current!.style.visibility = 'visible';
                     divRef.current!.style.display = 'none';
 
+                    // modificar la altura del textarea
                     setHeight(divRef.current!.offsetHeight);
                   }
                   handleChange(e);
                 }}
                 onKeyDown={e => {
+                  // manejar teclas especificas
+
+                  // ctrl - enter
                   if (e.ctrlKey && e.keyCode === 13) {
                     submitForm();
+                    // shift - enter
                   } else if (e.shiftKey && e.keyCode === 13) {
                     return;
+                    // enter
                   } else if (e.keyCode === 13) {
                     e.preventDefault();
                     submitForm();
                   }
                 }}
               />
+              {/* Asignar la referencia al clon que no se muestra */}
               <Clone ref={divRef} />
             </div>
 

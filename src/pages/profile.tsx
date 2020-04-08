@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { NextPage, GetServerSideProps } from 'next';
+import { NextPage } from 'next';
 import Head from 'next/head';
 import styled from 'styled-components';
-import nextCookie from 'next-cookies';
-import cookies from 'js-cookie';
-import Router from 'next/router';
+
 import axios from 'axios';
 
 import { PersonalMeetings, GroupsList } from '../components/Profile';
-import { withAuthSync, auth } from '../utils/authentication';
+import { withAuthSync } from '../utils/authentication';
 import { BACKEND_URI } from '../utils/config';
 import { useLoginContext } from '../hooks/login';
 
@@ -44,15 +42,18 @@ interface ProfilePageProps {
 }
 
 const ProfilePage: NextPage<ProfilePageProps> = props => {
+  // token del usuario recibido del componente de autorizacion
   const token = props.token || '';
-
+  // tomar el id del usuario que esta iniciado sesion, del context
   const { userId } = useLoginContext();
 
+  // estado para cada uno de los queries
   const [data, setData] = useState<UserData>();
   const [meetings, setMeetings] = useState<MeetingData[]>();
   const [groups, setGroups] = useState<GroupData[]>();
 
   useEffect(() => {
+    // sacar datos del usuario
     axios
       .get(`${BACKEND_URI}/user/get/${userId}`, {
         headers: {
@@ -63,6 +64,8 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
         setData(data.data);
       })
       .catch(err => console.log(err));
+
+    // sacar datos del meeting
     axios
       .get(`${BACKEND_URI}/meeting/get?id=${userId}`, {
         headers: {
@@ -73,6 +76,8 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
         setMeetings(data.data);
       })
       .catch(err => console.log(err));
+
+    // buscar grupos del usuario
     axios
       .get(`${BACKEND_URI}/group/get?id=${userId}`, {
         headers: {
@@ -85,9 +90,9 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
       .catch(err => console.log(err));
   }, []);
 
-  console.log('data', data);
+  /*  console.log('data', data);
   console.log('meetings', meetings);
-  console.log('groups', groups);
+  console.log('groups', groups); */
   return (
     <React.Fragment>
       <Head>
@@ -147,4 +152,5 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
   );
 };
 
+// proteger por medio del componente de autenticacion a la pagina
 export default withAuthSync(ProfilePage);

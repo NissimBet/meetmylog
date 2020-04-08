@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+// no le hagas caso a esto, es solo el css del Editor de Markdown
+
 export default styled.div`
   .mde-header {
     flex-shrink: 0;

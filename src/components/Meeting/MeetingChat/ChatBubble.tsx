@@ -17,6 +17,7 @@ const Bubble = styled.div<{ identifier: string }>`
 
   box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
 
+  /* Quitar el texto de la persona para cada mensaje seguido */
   &.${props => props.identifier} + &.${props => props.identifier} ${Author} {
     display: none;
   }

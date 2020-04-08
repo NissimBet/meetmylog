@@ -1,6 +1,5 @@
 import React, { useContext, useReducer, useEffect, useDebugValue } from 'react';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import cookie from 'js-cookie';
 import Router from 'next/router';
 import {
   logout as authLogout,
@@ -33,8 +32,10 @@ const { Provider } = LoggedIn;
 // identificador del local-storage para usar como llave de acceso
 const localStorageId = 'localStorageUserId';
 
+// hook para tener en cualquier parte del sitio el acceso al context, con las funciones y el valor del id del usuario
 export function useLoginContext() {
   const loginContext = useContext(LoggedIn);
+
   // manejo del local storage para guardar localmente la info para continuar sesiones al cerrar un tab
   const [userIdLocalStorage, setUserIdLocalStorage] = useLocalStorage(
     localStorageId,
@@ -43,6 +44,7 @@ export function useLoginContext() {
 
   // extraer informacion del contexto
   const userId = loginContext?.[0].userId;
+  // dispatch es el nombre de la funcion que maneja el cambio del state del contexto
   const dispatch = loginContext?.[1];
 
   // salir de la sesion
@@ -55,8 +57,10 @@ export function useLoginContext() {
 
   // inicio de sesion
   async function login(userIdentifier: string, userPassword: string) {
+    // hacer el login
     const userData = await authLogin(userIdentifier, userPassword);
 
+    // si hay datos, gr8, si no, no se cambia el context
     if (userData) {
       dispatch &&
         dispatch({
@@ -81,8 +85,14 @@ export function useLoginContext() {
   };
 }
 
+/**
+ * funcion que se llama automaticamente por el uselogincontext a traves del dispatch
+ * @param state el estado actual del context
+ * @param action el valor que indica lo que se quiere hacer
+ */
 function reducer(state: LoginState, action: LoginAction): LoginState {
   switch (action.type) {
+    // si es login, nomas agregar / reemplazar el userid al estado
     case LoginActionTypes.Login:
       if (action.payload) {
         const userId = action.payload.userId;
@@ -90,6 +100,7 @@ function reducer(state: LoginState, action: LoginAction): LoginState {
         return { ...state, userId: userId };
       }
       return { ...state };
+    // si es logour, quitar el userid y el estado
     case LoginActionTypes.Logout:
       return { userId: '' };
   }

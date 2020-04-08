@@ -35,6 +35,7 @@ const InputContainer = styled.div`
   }
 `;
 
+// validacion para el formulario de inicio de sesion
 const FormValidation = object().shape({
   email: string()
     //.min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo')
@@ -47,7 +48,9 @@ const FormValidation = object().shape({
 });
 
 const LoginPage: NextPage = () => {
+  // tomar funcion de login del context
   const { login } = useLoginContext();
+
   return (
     <React.Fragment>
       <Head>
@@ -69,10 +72,12 @@ const LoginPage: NextPage = () => {
           }}
           onSubmit={(values, actions) => {
             actions.setSubmitting(true);
+            // ralizar el login
             login(values.email, values.password)
               .then(val => {
                 actions.setSubmitting(false);
               })
+              // si hay un error mostrarlo (TODO)
               .catch(data => {
                 console.log(data);
               });

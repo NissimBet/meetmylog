@@ -38,9 +38,10 @@ const InputContainer = styled.div`
   }
 `;
 
+// validacion por medio de yup
 const FormValidation = object().shape({
   username: string()
-    //.min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo')
+    /* .min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo') */
     .required('Por favor ingrese su nombre de usuario'),
   email: string()
     .email('Favor ingresa un correo válido')
@@ -57,6 +58,7 @@ const FormValidation = object().shape({
 });
 
 const PaginaRegistro: NextPage = () => {
+  // state para mostrar el error que el servidor manda, si se mando alguno
   const [serverError, setServerError] = useState('');
   return (
     <React.Fragment>
@@ -72,6 +74,7 @@ const PaginaRegistro: NextPage = () => {
         }}
       >
         <h1>Registrate</h1>
+        {/* Manejador de formularios, se encarga de muchas cosas que hacen todo mas tedioso */}
         <Formik
           initialValues={{
             username: '',
@@ -82,7 +85,9 @@ const PaginaRegistro: NextPage = () => {
           onSubmit={(values, actions) => {
             actions.setSubmitting(true);
             setServerError('');
+            // extraer datos
             const { email, password, username } = values;
+            // realizar el request del registro
             axios
               .post(`${BACKEND_URI}/user/register`, {
                 username,
@@ -91,15 +96,21 @@ const PaginaRegistro: NextPage = () => {
                 name: username,
               })
               .then(_ => {
+                // si el registro fue exitoso, ir al login
                 Router.push('/login');
                 actions.setSubmitting(false);
               })
+              // error generico
+              // se puede revisar el codigo de error que axios recibe
               .catch(data => {
                 setServerError('Username or email in use');
                 actions.setSubmitting(false);
               });
           }}
+          // esquema de validacion que se va a seguir
           validationSchema={FormValidation}
+          // validar cuando se pierde el focus en un input
+          // blur => perdida de focus en un elemento
           validateOnBlur
         >
           {({

@@ -10,7 +10,10 @@ interface MeetingContentProps {
 const MeetingContent: React.FunctionComponent<MeetingContentProps> = ({
   className,
 }) => {
+  // el markdown editor funciona con los dos states
+  // state para el valor del texto en markdown
   const [value, setValue] = React.useState('');
+  // satte para saber si se esta en el tab de escritura y de preview
   const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>(
     'write'
   );
