@@ -18,6 +18,7 @@ import { BACKEND_URI } from '../../utils/config';
 import { useLoginContext } from '../../hooks/login';
 import GroupsList from '../../components/Meeting/Create/GroupsList';
 import UsersList from '../../components/Meeting/Create/UsersList';
+import Router from 'next/router';
 
 const FormContent = styled.div`
   display: flex;
@@ -119,7 +120,42 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
           share_link: '',
           groupId: '',
         }}
-        onSubmit={values => console.log(values)}
+        onSubmit={(values, actions) => {
+          actions.setSubmitting(true);
+          const meetingMembers: string[] = [];
+          if (values.share_method === 'groupId') {
+            meetingMembers.push(
+              ...groups
+                .find(val => val.groupId === values.groupId)
+                .members.flatMap(user => user.userId)
+            );
+          } else if (values.share_method === 'members') {
+            meetingMembers.push(...values.members);
+          }
+
+          axios
+            .post(
+              `${BACKEND_URI}/meeting/new`,
+              {
+                creator: userId,
+                members: meetingMembers,
+                meetingName: values.meetingName,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
+            .then(response => {
+              Router.push(`/meeting/ongoing/${response.data.meetingId}`);
+              actions.setSubmitting(false);
+            })
+            .catch(err => {
+              console.log(err);
+              actions.setSubmitting(false);
+            });
+        }}
         validationSchema={validation}
       >
         {formikBag => (
@@ -215,7 +251,9 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
               )}
             </FormContent>
 
-            <Button type="submit">Crear</Button>
+            <Button type="submit" disabled={formikBag.isSubmitting}>
+              Crear
+            </Button>
           </Form>
         )}
       </Formik>

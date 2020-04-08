@@ -19,28 +19,23 @@ const Textarea = styled.textarea`
   border: none;
   outline: none;
 
-  /* min-height: 3em; */
-  max-height: 10em;
-
   overflow-y: auto;
   overflow-x: hidden;
   resize: none;
 
-  /* margin: 20px 10px; */
-  padding: 10px;
   border-radius: 10px;
 
-  line-height: 1;
-  /*   border: 1px solid black; */
-  /* flex: 3; */
+  padding: 0.5em;
+  min-height: 2em;
+  line-height: 1em;
+  max-height: 10em;
+
   width: 100%;
 
   transition: height 0.15s ease;
 `;
 
 const SendContainer = styled.div`
-  /* flex: 1; */
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,7 +95,6 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
-  let prev = 0;
   return (
     <Formik
       initialValues={{ message: '' }}
@@ -111,7 +105,7 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
       }}
       validationSchema={MessageValidation}
     >
-      {({ handleSubmit, values, handleChange, submitForm, setValues }) => (
+      {({ handleSubmit, values, handleChange, submitForm }) => (
         <form onSubmit={handleSubmit}>
           <Container className={className}>
             <div style={{ flex: 3 }}>
@@ -137,9 +131,7 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
                     // disappear invisible div
                     divRef.current!.style.visibility = 'visible';
                     divRef.current!.style.display = 'none';
-                    /* if (height !== divRef.current!.offsetHeight) {
-                      setHeight(divRef.current!.offsetHeight);
-                    } */
+
                     setHeight(divRef.current!.offsetHeight);
                   }
                   handleChange(e);
