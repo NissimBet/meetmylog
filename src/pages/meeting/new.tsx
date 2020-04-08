@@ -17,6 +17,7 @@ import { withAuthSync } from '../../utils/authentication';
 import { BACKEND_URI } from '../../utils/config';
 import { useLoginContext } from '../../hooks/login';
 import GroupsList from '../../components/Meeting/Create/GroupsList';
+import UsersList from '../../components/Meeting/Create/UsersList';
 
 const FormContent = styled.div`
   display: flex;
@@ -55,13 +56,13 @@ const validation = object().shape({
   ),
   share_method: string()
     .oneOf(
-      ['group_name', 'share_link', 'members'],
+      ['groupId', 'share_link', 'members'],
       'Favor seleccione una forma de compartir la reunión'
     )
     .required('Favor seleccione una forma de compartir la reunión'),
   members: array().notRequired(),
   share_link: string().notRequired(),
-  group_name: string().notRequired(),
+  groupId: string().notRequired(),
 });
 
 const CreateMeetingPage: NextPage<{ token: string }> = props => {
@@ -116,7 +117,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
           share_method: '',
           members: [],
           share_link: '',
-          group_name: '',
+          groupId: '',
         }}
         onSubmit={values => console.log(values)}
         validationSchema={validation}
@@ -161,7 +162,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                   name="share_method"
                   values={[
                     { label: '', value: '' },
-                    { label: 'Equipo existente', value: 'group_name' },
+                    { label: 'Equipo existente', value: 'groupId' },
                     {
                       label: 'Generar link para compartir',
                       value: 'share_link',
@@ -176,10 +177,16 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                   <Error>{formikBag.errors.share_method}</Error>
                 )}
 
-              {formikBag.values.share_method === 'group_name' && (
+              {formikBag.values.share_method === 'groupId' && (
                 <SelectionContainer>
                   <div>Ingrese el nombre del equipo de trabajo</div>
-                  <GroupsList groups={groups} handleSelect={() => {}} />
+                  <GroupsList
+                    selected={formikBag.values.groupId}
+                    groups={groups}
+                    handleSelect={id => {
+                      formikBag.setFieldValue('groupId', id, true);
+                    }}
+                  />
                 </SelectionContainer>
               )}
               {formikBag.values.share_method === 'share_link' && (
@@ -190,11 +197,20 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
               {formikBag.values.share_method === 'members' && (
                 <SelectionContainer>
                   <div>Ingrese el nombre de usuario los integrantes</div>
-                  <ul>
-                    {uniqueMembers.map(member => (
-                      <li key={member.userId}>{member.name}</li>
-                    ))}
-                  </ul>
+                  <UsersList
+                    selected={formikBag.values.members}
+                    members={uniqueMembers}
+                    handleSelect={id => {
+                      const index = formikBag.values.members.indexOf(id);
+                      const newArr = [...formikBag.values.members];
+                      if (index === -1) {
+                        newArr.push(id);
+                      } else {
+                        newArr.splice(index, 1);
+                      }
+                      formikBag.setFieldValue('members', newArr, true);
+                    }}
+                  />
                 </SelectionContainer>
               )}
             </FormContent>

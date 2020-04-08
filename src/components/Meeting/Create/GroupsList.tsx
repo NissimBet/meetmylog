@@ -11,7 +11,7 @@ const Container = styled.div`
   gap: 20px;
 `;
 
-const GroupCard = styled.div`
+const GroupCard = styled.div<{ selected: boolean }>`
   box-shadow: 0 0 6px 1px #2222;
   padding: 10px;
   border: 2px solid transparent;
@@ -21,13 +21,20 @@ const GroupCard = styled.div`
     border-color: #bcff8e;
     box-shadow: 0 0 6px 1px #bcff8e22;
   }
+
+  ${props =>
+    props.selected &&
+    `
+    border-color: #bcff8e;
+    box-shadow: 0 0 6px 1px #bcff8e22;
+    `}
 `;
 
 interface GroupsListProps {
   groups: GroupData[];
-  handleSelect: () => void;
+  handleSelect: (id: string) => void;
   className?: string;
-  selected?: boolean;
+  selected: string;
 }
 
 const GroupsList: React.FunctionComponent<GroupsListProps> = ({
@@ -39,11 +46,15 @@ const GroupsList: React.FunctionComponent<GroupsListProps> = ({
   return (
     <Container className={className}>
       {groups.map(group => (
-        <GroupCard key={group._id}>
+        <GroupCard
+          selected={selected === group.groupId}
+          key={group.groupId}
+          onClick={() => handleSelect(group.groupId)}
+        >
           {group.name}
           <ul>
             {group?.members.map(member => (
-              <li key={member._id}>{member.name}</li>
+              <li key={member.userId}>{member.name}</li>
             ))}
           </ul>
         </GroupCard>
