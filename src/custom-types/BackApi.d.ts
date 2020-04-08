@@ -31,6 +31,6 @@ interface GroupData {
   groupId: string;
   name: string;
   creator: string;
-  members: string[];
+  members: Omit<UserData, 'email'>[];
   meetings: string[];
 }

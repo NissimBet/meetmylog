@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { Formik, Form } from 'formik';
 import Button from '../../components/Button';
 import styled from 'styled-components';
+import axios from 'axios';
 import {
   Error,
   Label,
@@ -13,6 +14,8 @@ import {
 } from '../../components/Form';
 import { object, string, array } from 'yup';
 import { withAuthSync } from '../../utils/authentication';
+import { BACKEND_URI } from '../../utils/config';
+import { useLoginContext } from '../../hooks/login';
 
 const FormContent = styled.div`
   display: flex;
@@ -56,7 +59,47 @@ const validation = object().shape({
   group_name: string().notRequired(),
 });
 
-const CreateMeetingPage: NextPage = () => {
+const CreateMeetingPage: NextPage<{ token: string }> = props => {
+  const { token } = props;
+  const { userId } = useLoginContext();
+  const [groups, setGroups] = useState<GroupData[]>([]);
+  const [uniqueMembers, setUniqueMembers] = useState<
+    Omit<UserData, 'email'>[]
+  >();
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URI}/group/get?id=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        setGroups(response.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    const unique: Omit<UserData, 'email'>[] = [];
+    groups
+      .flatMap(group => group.members)
+      .forEach(member => {
+        const index = unique.findIndex(
+          searchMember => searchMember.userId === member.userId
+        );
+        if (index === -1) {
+          unique.push({
+            _id: member._id,
+            name: member.name,
+            userId: member.userId,
+            username: member.username,
+          });
+        }
+      });
+    setUniqueMembers(unique);
+  }, [groups]);
+
   return (
     <React.Fragment>
       <Head>
@@ -131,6 +174,18 @@ const CreateMeetingPage: NextPage = () => {
               {formikBag.values.share_method === 'group_name' && (
                 <InputContainer>
                   <div>Ingrese el nombre del equipo de trabajo</div>
+                  <ul>
+                    {groups.map(group => (
+                      <li key={group._id}>
+                        {group.name}
+                        <ul>
+                          {group?.members.map(member => (
+                            <li key={member._id}>{member.name}</li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
                 </InputContainer>
               )}
               {formikBag.values.share_method === 'share_link' && (
@@ -140,7 +195,12 @@ const CreateMeetingPage: NextPage = () => {
               )}
               {formikBag.values.share_method === 'members' && (
                 <InputContainer>
-                  <div>Ingrese el nombre de los integrantes</div>
+                  <div>Ingrese el nombre de usuario los integrantes</div>
+                  <ul>
+                    {uniqueMembers.map(member => (
+                      <li key={member.userId}>{member.name}</li>
+                    ))}
+                  </ul>
                 </InputContainer>
               )}
             </FormContent>
