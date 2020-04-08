@@ -5,7 +5,7 @@ import { NoStyledButton } from '../../Button';
 import { object, string } from 'yup';
 
 const Container = styled.div`
-  box-shadow: 0px -2px 10px 6px #0002;
+  /* box-shadow: 0px -2px 10px 6px #0002; */
   background-color: #999;
   display: flex;
   flex-direction: row;
@@ -19,7 +19,7 @@ const Textarea = styled.textarea`
   border: none;
   outline: none;
 
-  min-height: 3em;
+  /* min-height: 3em; */
   max-height: 10em;
 
   overflow-y: auto;
@@ -39,7 +39,7 @@ const Textarea = styled.textarea`
 `;
 
 const SendContainer = styled.div`
-  flex: 1;
+  /* flex: 1; */
 
   display: flex;
   align-items: center;
@@ -111,7 +111,7 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
       }}
       validationSchema={MessageValidation}
     >
-      {({ handleSubmit, values, handleChange, submitForm }) => (
+      {({ handleSubmit, values, handleChange, submitForm, setValues }) => (
         <form onSubmit={handleSubmit}>
           <Container className={className}>
             <div style={{ flex: 3 }}>
@@ -146,6 +146,11 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
                 }}
                 onKeyDown={e => {
                   if (e.ctrlKey && e.keyCode === 13) {
+                    submitForm();
+                  } else if (e.shiftKey && e.keyCode === 13) {
+                    return;
+                  } else if (e.keyCode === 13) {
+                    e.preventDefault();
                     submitForm();
                   }
                 }}

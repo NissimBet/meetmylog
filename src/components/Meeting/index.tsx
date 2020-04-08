@@ -18,8 +18,9 @@ const MeetingContentContainer = styled(MeetingContent)`
 
 const MeetingChatContainer = styled(MeetingChat)`
   flex: 2;
+  background-color: #aaa;
 
-  min-width: 400px;
+  min-width: 500px;
   height: 100%;
 `;
 

@@ -29,8 +29,9 @@ const GlobalStyle = createGlobalStyle`
 const PageLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 75px calc(100vh - 75px);
   min-height: 100%;
+  height: 100%;
 
   /* background-color: #ccc2; */
   /* background-color: ${({ theme }) => theme.colors.container.secondary}; */
@@ -38,6 +39,7 @@ const PageLayout = styled.div`
 
 const MeetingPageContent = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const PageContent = styled.div`

@@ -8,11 +8,16 @@ import Button from '../Button';
 const NavbarContainer = styled.div`
   padding: 20px 0px;
 
+  display: flex;
+  align-items: center;
+
   box-shadow: 0 0 4px 2px #0003;
 `;
 
 const NavbarContent = styled.div`
   max-width: 1200px;
+  width: 100%;
+
   margin: auto;
 
   display: flex;

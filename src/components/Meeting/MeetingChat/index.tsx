@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ChatInput from './ChatInput';
@@ -23,11 +23,14 @@ const ChatContainer = styled.div`
   flex-direction: column;
   justify-content: safe flex-end;
   width: 100%;
-  padding: 0 15px;
+  padding: 15px 15px 30px 15px;
 `;
 
 const Bubble = styled(ChatBubble)<{ self: boolean }>`
   align-self: ${({ self }) => (self ? 'flex-end' : 'flex-start')};
+
+  ${props => props.self && `& p:nth-child(1) {display: none;}`}
+  ${props => props.self && `background-color: #DCf8C6;`}
 `;
 
 interface MeetingChatProps {
@@ -48,9 +51,15 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
   onChatSubmit,
 }) => {
   const { userId } = useLoginContext();
+  const container = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (container && container.current)
+      container.current.scrollTop = container?.current?.scrollHeight;
+  }, [container]);
   return (
     <MeetingChatContainer className={className}>
-      <Container>
+      <Container ref={container}>
         <ChatContainer>
           {chat.map(data => (
             <Bubble
@@ -78,6 +87,7 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
             )
             .then(response => {
               onChatSubmit(response.data);
+              container.current.scrollTop = container?.current?.scrollHeight;
             })
             .catch(err => console.log(err));
         }}
