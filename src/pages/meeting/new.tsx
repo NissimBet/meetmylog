@@ -16,6 +16,7 @@ import { object, string, array } from 'yup';
 import { withAuthSync } from '../../utils/authentication';
 import { BACKEND_URI } from '../../utils/config';
 import { useLoginContext } from '../../hooks/login';
+import GroupsList from '../../components/Meeting/Create/GroupsList';
 
 const FormContent = styled.div`
   display: flex;
@@ -42,6 +43,10 @@ const InputContainer = styled.div`
   ${Input}, ${Select} {
     flex: 3;
   }
+`;
+
+const SelectionContainer = styled.div`
+  width: 100%;
 `;
 
 const validation = object().shape({
@@ -172,36 +177,25 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                 )}
 
               {formikBag.values.share_method === 'group_name' && (
-                <InputContainer>
+                <SelectionContainer>
                   <div>Ingrese el nombre del equipo de trabajo</div>
-                  <ul>
-                    {groups.map(group => (
-                      <li key={group._id}>
-                        {group.name}
-                        <ul>
-                          {group?.members.map(member => (
-                            <li key={member._id}>{member.name}</li>
-                          ))}
-                        </ul>
-                      </li>
-                    ))}
-                  </ul>
-                </InputContainer>
+                  <GroupsList groups={groups} handleSelect={() => {}} />
+                </SelectionContainer>
               )}
               {formikBag.values.share_method === 'share_link' && (
-                <InputContainer>
+                <SelectionContainer>
                   <div>Este es el link de la reunion</div>
-                </InputContainer>
+                </SelectionContainer>
               )}
               {formikBag.values.share_method === 'members' && (
-                <InputContainer>
+                <SelectionContainer>
                   <div>Ingrese el nombre de usuario los integrantes</div>
                   <ul>
                     {uniqueMembers.map(member => (
                       <li key={member.userId}>{member.name}</li>
                     ))}
                   </ul>
-                </InputContainer>
+                </SelectionContainer>
               )}
             </FormContent>
 
