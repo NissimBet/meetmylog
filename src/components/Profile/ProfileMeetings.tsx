@@ -33,6 +33,7 @@ const PersonalMeetings: React.FunctionComponent<PersonalMeetingsProps> = ({
           key={meeting.meetingId}
         >
           <MeetingCard />
+          <p>{meeting.meetingName}</p>
         </CustomLink>
       ))}
     </MeetingContainer>

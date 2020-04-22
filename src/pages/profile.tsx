@@ -102,6 +102,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
         <div>
           <h1>{data.username}</h1>
 
+          {userId && <p>{userId}</p>}
           <Container>
             {meetings && (
               <EndedMeetings>

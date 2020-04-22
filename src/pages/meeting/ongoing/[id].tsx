@@ -15,6 +15,7 @@ const Meeting: NextPage<{ token: string }> = props => {
   const [meetingData, setMeetingData] = useState<MeetingData>();
   const [chat, setChat] = useState<Chat[]>();
   const [socket, setSocket] = useState<SocketIOClient.Socket>(null);
+  const [message, setNewMessage] = useState<Chat>(null);
 
   const router = useRouter();
 
@@ -26,36 +27,52 @@ const Meeting: NextPage<{ token: string }> = props => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(data => {
+      .then(({ data }) => {
         // set los datos del meeting
-        setMeetingData(data.data);
+        setMeetingData(data);
         // separar los datos del chat, que caambian mas seguido
-        setChat([...data.data.chat]);
+        setChat([...data.chat]);
+
+        setSocket(io(`${BACKEND_URI}`));
       })
       .catch((err: AxiosError) => {
         // dependiendo del error, ir al login o mandar 404
         if (err.response.status === 403) router.replace('/404');
         else if (err.response.status === 401) router.replace('/login');
       });
-  }, []);
 
-  // se ejecuta cuando termina el query,
-  // cuando cambian los datos del meeting, conectar el socket
-  useEffect(() => {
-    if (meetingData) {
-      setSocket(io(`${BACKEND_URI}`));
-    }
-
-    // cuando se regresa una funcion, se le llama cleanup function,
-    // esta se encarga de desconectar el socket del servidor
     return () => {
       socket?.disconnect();
     };
-  }, [meetingData]);
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit(
+        'join-room',
+        `meeting-${meetingData.meetingId.substring(
+          meetingData.meetingId.length - 5
+        )}`
+      );
+
+      socket.on(`message`, (data: Chat) => {
+        // console.table(chat);
+        setNewMessage(data);
+        // console.table(chat);
+        // console.log(data);
+      });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    if (message) {
+      setChat([...chat, message]);
+    }
+  }, [message]);
 
   // esto deberia ponerse en el useeffect arribita ^ :b
   // cuando este el socket definido, y los datos del meeting,
-  if (socket && meetingData) {
+  /* if (socket && meetingData) {
     // agregarle listeners al socket, cuando se reciba un mensaje del chat, agregarlo (por eso se hace un state diferente)
     socket.on(`message`, (data: Chat) => {
       setChat([...chat, data]);
@@ -70,7 +87,7 @@ const Meeting: NextPage<{ token: string }> = props => {
       )}`
     );
   }
-
+ */
   return (
     <React.Fragment>
       <Head>
