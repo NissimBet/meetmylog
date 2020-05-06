@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import MeetingChat from './MeetingChat';
 import MeetingContent from './MeetingContent';
+import MeetingSidebar from './MeetingSidebar';
+import { BACKEND_URI } from '../../utils/config';
 
 const MeetingPageContainer = styled.div`
   display: flex;
@@ -24,11 +27,27 @@ const MeetingChatContainer = styled(MeetingChat)`
   height: 100%;
 `;
 
+const MeetingSidebarContainer = styled(MeetingSidebar)`
+  flex: 1;
+  height: 100%;
+  min-width: 250px;
+`;
+
 const MeetingPage: React.FunctionComponent<MeetingData & {
   token: string;
   onChatSubmit: (arg0: Chat) => void;
+  closeMeeting: () => void;
 }> = props => {
-  const { chat, creator, meetingId, token, onChatSubmit } = props;
+  const {
+    chat,
+    creator,
+    meetingId,
+    token,
+    onChatSubmit,
+    members,
+    closeMeeting,
+  } = props;
+
   return (
     <MeetingPageContainer>
       <MeetingChatContainer
@@ -39,6 +58,11 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
         onChatSubmit={onChatSubmit}
       />
       <MeetingContentContainer />
+      <MeetingSidebarContainer
+        creator={creator}
+        members={members}
+        handleCloseMeeting={closeMeeting}
+      />
     </MeetingPageContainer>
   );
 };

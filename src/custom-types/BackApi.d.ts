@@ -14,7 +14,7 @@ interface MeetingData {
   ongoing: boolean;
   creator: MeetingCreator;
   chat: Chat[];
-  members: string[];
+  members: Pick<UserData, 'userId', 'username', 'name'>[];
 }
 
 interface MeetingCreator extends Omit<UserData, 'email'> {}

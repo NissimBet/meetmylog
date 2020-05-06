@@ -4,7 +4,7 @@ import Head from 'next/head';
 import MeetingPage from '../../../components/Meeting';
 import { withAuthSync } from '../../../utils/authentication';
 import axios, { AxiosError } from 'axios';
-
+import Router from 'next/router';
 import io from 'socket.io-client';
 
 import { BACKEND_URI } from '../../../utils/config';
@@ -70,24 +70,22 @@ const Meeting: NextPage<{ token: string }> = props => {
     }
   }, [message]);
 
-  // esto deberia ponerse en el useeffect arribita ^ :b
-  // cuando este el socket definido, y los datos del meeting,
-  /* if (socket && meetingData) {
-    // agregarle listeners al socket, cuando se reciba un mensaje del chat, agregarlo (por eso se hace un state diferente)
-    socket.on(`message`, (data: Chat) => {
-      setChat([...chat, data]);
-      console.log(data);
-    });
+  const closeMeeting = async () => {
+    return axios
+      .put(
+        `${BACKEND_URI}/meeting/close/${meetingData.meetingId}`,
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(_ => {
+        setTimeout(() => Router.push('/profile'), 1000);
+      });
+  };
 
-    // emitir un mensaje para con la info del room al cual conectarse
-    socket.emit(
-      'join-room',
-      `meeting-${meetingData.meetingId.substring(
-        meetingData.meetingId.length - 5
-      )}`
-    );
-  }
- */
   return (
     <React.Fragment>
       <Head>
@@ -98,6 +96,7 @@ const Meeting: NextPage<{ token: string }> = props => {
           {...meetingData}
           chat={chat}
           token={token}
+          closeMeeting={closeMeeting}
           onChatSubmit={newChat => {
             // cuando se le da enter, al chat, emitir el mensaje al socket / server
             if (socket) {

@@ -57,26 +57,38 @@ interface ButtonProps {
   type?: 'button' | 'reset' | 'submit';
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({
-  children,
-  variant,
-  className,
-  onClick,
-  ...props
-}) => {
-  if (variant === 'outline') {
+const Button: React.FunctionComponent<ButtonProps> = React.forwardRef(
+  (
+    { children, variant, className, onClick, ...props },
+    ref: React.RefObject<HTMLButtonElement>
+  ) => {
+    if (variant === 'outline') {
+      return (
+        <StyledOutlineButton
+          ref={ref}
+          className={className}
+          onClick={onClick}
+          {...props}
+        >
+          {children}
+        </StyledOutlineButton>
+      );
+    }
+
     return (
-      <StyledOutlineButton className={className} onClick={onClick} {...props}>
+      <StyledButton
+        ref={ref}
+        className={className}
+        onClick={onClick}
+        {...props}
+      >
         {children}
-      </StyledOutlineButton>
+      </StyledButton>
     );
   }
-
-  return (
-    <StyledButton className={className} onClick={onClick} {...props}>
-      {children}
-    </StyledButton>
-  );
-};
+);
 
 export default Button;
+// export default React.forwardRef((props, ref) => (
+//   <Button {...props} ref={ref} />
+// ));

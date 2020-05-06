@@ -90,9 +90,6 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
       .catch(err => console.log(err));
   }, []);
 
-  /*  console.log('data', data);
-  console.log('meetings', meetings);
-  console.log('groups', groups); */
   return (
     <React.Fragment>
       <Head>
@@ -102,7 +99,6 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
         <div>
           <h1>{data.username}</h1>
 
-          {userId && <p>{userId}</p>}
           <Container>
             {meetings && (
               <EndedMeetings>
