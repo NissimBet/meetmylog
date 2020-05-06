@@ -46,8 +46,13 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
           <NavLink to="/profile">Profile Page</NavLink>
         </NavbarLinks>
         <NavbarLinks>
-          <NavLink to="/registro">Registrate</NavLink>
-          <NavLink to="/login">Inicia Sesión</NavLink>
+          {!userId && (
+            <>
+              {' '}
+              <NavLink to="/registro">Registrate</NavLink>
+              <NavLink to="/login">Inicia Sesión</NavLink>{' '}
+            </>
+          )}
         </NavbarLinks>
         {userId && <Button onClick={logout}>Logout</Button>}
       </NavbarContent>
