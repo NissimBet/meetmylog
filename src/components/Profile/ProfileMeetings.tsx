@@ -29,7 +29,11 @@ const PersonalMeetings: React.FunctionComponent<PersonalMeetingsProps> = ({
     <MeetingContainer cols={cols} {...props}>
       {meetings.map(meeting => (
         <CustomLink
-          to={`/meeting/ongoing/${meeting.meetingId}`}
+          to={
+            meeting.ongoing
+              ? `/meeting/ongoing/${meeting.meetingId}`
+              : `/profile`
+          }
           key={meeting.meetingId}
         >
           <MeetingCard />

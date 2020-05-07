@@ -41,16 +41,14 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
       <NavbarContent>
         <NavbarLinks>
           <NavLink to="/">{siteTitle}</NavLink>
-          <NavLink to="/meeting/ongoing/123">Meeting test page</NavLink>
-          <NavLink to="/meeting/new">Meeting creation page</NavLink>
-          <NavLink to="/profile">Profile Page</NavLink>
+          <NavLink to="/meeting/new">Start a Meeting</NavLink>
+          {userId && <NavLink to="/profile">Profile Page</NavLink>}
         </NavbarLinks>
         <NavbarLinks>
           {!userId && (
             <>
-              {' '}
               <NavLink to="/registro">Registrate</NavLink>
-              <NavLink to="/login">Inicia Sesión</NavLink>{' '}
+              <NavLink to="/login">Inicia Sesión</NavLink>
             </>
           )}
         </NavbarLinks>

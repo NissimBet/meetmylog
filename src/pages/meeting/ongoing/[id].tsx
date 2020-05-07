@@ -27,18 +27,23 @@ const Meeting: NextPage<{ token: string }> = props => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(({ data }) => {
-        // set los datos del meeting
-        setMeetingData(data);
-        // separar los datos del chat, que caambian mas seguido
-        setChat([...data.chat]);
+      .then(({ data }: { data: MeetingData }) => {
+        if (!data.ongoing) {
+          router.replace('/profile');
+        } else {
+          // set los datos del meeting
+          setMeetingData(data);
+          // separar los datos del chat, que caambian mas seguido
+          setChat([...data.chat]);
 
-        setSocket(io(`${BACKEND_URI}`));
+          setSocket(io(`${BACKEND_URI}`));
+        }
       })
       .catch((err: AxiosError) => {
         // dependiendo del error, ir al login o mandar 404
         if (err.response.status === 403) router.replace('/404');
         else if (err.response.status === 401) router.replace('/login');
+        else if (err.response.status === 404) router.replace('/profile');
       });
 
     return () => {
