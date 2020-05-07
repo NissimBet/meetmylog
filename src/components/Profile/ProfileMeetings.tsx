@@ -11,7 +11,7 @@ const MeetingContainer = styled.div<{ cols: number }>`
 
 const MeetingCard = styled.div`
   background-color: #ccc;
-  height: 100%;
+  padding: 40px 0;
 `;
 
 interface PersonalMeetingsProps {
@@ -28,17 +28,19 @@ const PersonalMeetings: React.FunctionComponent<PersonalMeetingsProps> = ({
   return (
     <MeetingContainer cols={cols} {...props}>
       {meetings.map(meeting => (
-        <CustomLink
-          to={
-            meeting.ongoing
-              ? `/meeting/ongoing/${meeting.meetingId}`
-              : `/profile`
-          }
-          key={meeting.meetingId}
-        >
-          <MeetingCard />
-          <p>{meeting.meetingName}</p>
-        </CustomLink>
+        <div>
+          <CustomLink
+            to={
+              meeting.ongoing
+                ? `/meeting/ongoing/${meeting.meetingId}`
+                : `/profile`
+            }
+            key={meeting.meetingId}
+          >
+            <MeetingCard />
+            <p>{meeting.meetingName}</p>
+          </CustomLink>
+        </div>
       ))}
     </MeetingContainer>
   );

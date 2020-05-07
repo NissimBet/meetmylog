@@ -9,6 +9,7 @@ import { PersonalMeetings, GroupsList } from '../components/Profile';
 import { withAuthSync } from '../utils/authentication';
 import { BACKEND_URI } from '../utils/config';
 import { useLoginContext } from '../hooks/login';
+import { partitionArray } from '../utils/util';
 
 const Container = styled.div`
   display: grid;
@@ -17,24 +18,37 @@ const Container = styled.div`
   gap: 100px 40px;
 `;
 
+const Username = styled.h1`
+  margin: 20px 0;
+
+  letter-spacing: 2px;
+`;
+
+const SectionTitle = styled.h2`
+  margin-top: 10px;
+  margin-bottom: 30px;
+
+  letter-spacing: 2px;
+`;
+
 const OngoingMeetings = styled.div`
   border: 1px solid #ccc;
-  grid-column: 4 / span 2;
+  grid-column: 1 / span 2;
 `;
 
 const EndedMeetings = styled.div`
   border: 1px solid #ccc;
-  grid-column: 1 / span 3;
+  grid-column: 3 / span 3;
 `;
 
 const MemberGroups = styled.div`
   border: 1px solid #ccc;
-  grid-column: 3 / span 3;
+  grid-column: 1 / span 3;
 `;
 
 const LeaderGroups = styled.div`
   border: 1px solid #ccc;
-  grid-column: 1 / span 2;
+  grid-column: 4 / span 2;
 `;
 
 interface ProfilePageProps {
@@ -90,6 +104,16 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
       .catch(err => console.log(err));
   }, []);
 
+  const [ongoingMeetings, finishedMeetings] = partitionArray(
+    meetings || [],
+    meeting => meeting.ongoing
+  );
+
+  const [leaderGroups, memberGroups] = partitionArray(
+    groups || [],
+    group => group.creator == userId
+  );
+
   return (
     <React.Fragment>
       <Head>
@@ -97,48 +121,37 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
       </Head>
       {data ? (
         <div>
-          <h1>{data.username}</h1>
+          <Username>{data.username}</Username>
 
           <Container>
             {meetings && (
-              <EndedMeetings>
-                <h1>Ended Meetings</h1>
-                <PersonalMeetings
-                  cols={3}
-                  meetings={meetings.filter(meeting => !meeting.ongoing)}
-                />
-              </EndedMeetings>
-            )}
-
-            {meetings && (
               <OngoingMeetings>
-                <h1>Ongoing Meetings</h1>
-                <PersonalMeetings
-                  cols={2}
-                  meetings={meetings.filter(meeting => meeting.ongoing)}
-                />
+                <SectionTitle>Ongoing Meetings</SectionTitle>
+                <PersonalMeetings cols={2} meetings={ongoingMeetings} />
               </OngoingMeetings>
             )}
 
-            {groups && (
-              <LeaderGroups>
-                <h1>Your are a leader of</h1>
-
-                <GroupsList
-                  groups={groups.filter(group => group.creator === data._id)}
-                />
-              </LeaderGroups>
+            {meetings && (
+              <EndedMeetings>
+                <SectionTitle>Archived Meetings</SectionTitle>
+                <PersonalMeetings cols={3} meetings={finishedMeetings} />
+              </EndedMeetings>
             )}
 
             {groups && (
               <MemberGroups>
-                <h1>Your are a member of</h1>
+                <SectionTitle>Your are a member of</SectionTitle>
 
-                <GroupsList
-                  groups={groups.filter(group => group.creator !== data._id)}
-                  columns={2}
-                />
+                <GroupsList groups={memberGroups} columns={3} />
               </MemberGroups>
+            )}
+
+            {groups && (
+              <LeaderGroups>
+                <SectionTitle>Your are a leader of</SectionTitle>
+
+                <GroupsList groups={leaderGroups} />
+              </LeaderGroups>
             )}
           </Container>
         </div>
