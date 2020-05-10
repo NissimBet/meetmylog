@@ -33,7 +33,7 @@ const PersonalMeetings: React.FunctionComponent<PersonalMeetingsProps> = ({
             to={
               meeting.ongoing
                 ? `/meeting/ongoing/${meeting.meetingId}`
-                : `/profile`
+                : `/meeting/archived/${meeting.meetingId}`
             }
             key={meeting.meetingId}
           >
