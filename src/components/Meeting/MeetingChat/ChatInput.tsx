@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import { NoStyledButton } from '../../Button';
 import { object, string } from 'yup';
+import { useTagContext } from '../../../hooks/chatTag';
 
 const Container = styled.div`
   /* box-shadow: 0px -2px 10px 6px #0002; */
@@ -98,80 +99,80 @@ const ChatInput: React.FunctionComponent<ChatInputProps> = ({
   const divRef = useRef<HTMLDivElement>(null);
   // state para la altura del textarea
   const [height, setHeight] = useState(0);
+
+  const [compMessage, setCompMessage] = useState('');
+
+  const { tag, wasSet, consume: consumeTag } = useTagContext();
+
+  useEffect(() => {
+    if (wasSet) {
+      setCompMessage(compMessage + ' @' + tag);
+    }
+
+    consumeTag();
+  }, [wasSet]);
+
   return (
-    <Formik
-      initialValues={{ message: '' }}
-      onSubmit={(values, actions) => {
-        // enviar mensaje a tarves de la funcion que se paso por prop
-        handleSubmitProp && handleSubmitProp(values.message);
-        // borrar datos del textarea
-        actions.resetForm();
-      }}
-      validationSchema={MessageValidation}
-    >
-      {({ handleSubmit, values, handleChange, submitForm }) => (
-        <form onSubmit={handleSubmit}>
-          <Container className={className}>
-            <div style={{ flex: 3 }}>
-              <Textarea
-                placeholder="Ingrese un mensaje"
-                name="message"
-                autoFocus
-                value={values.message}
-                onChange={e => {
-                  // sacar el del mensaje
-                  const content = values.message;
-                  // asegurar que no sea nulo
-                  if (divRef.current) {
-                    // pegarle el contenido al div invisible
-                    divRef.current!.innerHTML = content;
-                    // aparecer el clon, sin que se muestre
-                    divRef.current!.style.visibility = 'hidden';
-                    divRef.current!.style.display = 'block';
+    <Container className={className}>
+      <div style={{ flex: 3 }}>
+        <Textarea
+          placeholder="Ingrese un mensaje"
+          name="message"
+          autoFocus
+          value={compMessage}
+          onChange={e => {
+            // sacar el del mensaje
+            const content = compMessage;
+            // asegurar que no sea nulo
+            if (divRef.current) {
+              // pegarle el contenido al div invisible
+              divRef.current!.innerHTML = content;
+              // aparecer el clon, sin que se muestre
+              divRef.current!.style.visibility = 'hidden';
+              divRef.current!.style.display = 'block';
 
-                    // modificar la altura del textarea
-                    e.currentTarget.style.height =
-                      divRef.current!.offsetHeight + 'px';
-                    // quitar el clon
-                    divRef.current!.style.visibility = 'visible';
-                    divRef.current!.style.display = 'none';
+              // modificar la altura del textarea
+              e.currentTarget.style.height =
+                divRef.current!.offsetHeight + 'px';
+              // quitar el clon
+              divRef.current!.style.visibility = 'visible';
+              divRef.current!.style.display = 'none';
 
-                    // modificar la altura del textarea
-                    setHeight(divRef.current!.offsetHeight);
-                  }
-                  handleChange(e);
-                }}
-                onKeyDown={e => {
-                  // manejar teclas especificas
+              // modificar la altura del textarea
+              setHeight(divRef.current!.offsetHeight);
+            }
+            setCompMessage(e.target.value);
+          }}
+          onKeyDown={e => {
+            // manejar teclas especificas
 
-                  // ctrl - enter
-                  if (e.ctrlKey && e.keyCode === 13) {
-                    submitForm();
-                    // shift - enter
-                  } else if (e.shiftKey && e.keyCode === 13) {
-                    return;
-                    // enter
-                  } else if (e.keyCode === 13) {
-                    e.preventDefault();
-                    submitForm();
-                  }
-                }}
-              />
-              {/* Asignar la referencia al clon que no se muestra */}
-              <Clone ref={divRef} />
-            </div>
+            // ctrl - enter
+            if (e.ctrlKey && e.keyCode === 13) {
+              handleSubmitProp(compMessage);
+              setCompMessage('');
+              // shift - enter
+            } else if (e.shiftKey && e.keyCode === 13) {
+              return;
+              // enter
+            } else if (e.keyCode === 13) {
+              e.preventDefault();
+              handleSubmitProp(compMessage);
+              setCompMessage('');
+            }
+          }}
+        />
+        {/* Asignar la referencia al clon que no se muestra */}
+        <Clone ref={divRef} />
+      </div>
 
-            <SendContainer>
-              <NoStyledButton type="submit">
-                <Circle>
-                  <Triangle />
-                </Circle>
-              </NoStyledButton>
-            </SendContainer>
-          </Container>
-        </form>
-      )}
-    </Formik>
+      <SendContainer>
+        <NoStyledButton type="submit">
+          <Circle>
+            <Triangle />
+          </Circle>
+        </NoStyledButton>
+      </SendContainer>
+    </Container>
   );
 };
 

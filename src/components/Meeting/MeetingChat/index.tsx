@@ -53,6 +53,27 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
   const { userId } = useLoginContext();
   const container = useRef<HTMLDivElement>();
 
+  const submitInput = (value: string) => {
+    axios
+      .put(
+        `${BACKEND_URI}/meeting/chat/${meetingId}`,
+        {
+          from: userId,
+          message: value,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then(response => {
+        onChatSubmit(response.data);
+        container.current.scrollTop = container?.current?.scrollHeight;
+      })
+      .catch(err => console.log(err));
+  };
+
   useEffect(() => {
     if (container && container.current)
       container.current.scrollTop = container?.current?.scrollHeight;
@@ -70,28 +91,7 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
           ))}
         </ChatContainer>
       </Container>
-      <ChatInput
-        handleSubmit={value => {
-          axios
-            .put(
-              `${BACKEND_URI}/meeting/chat/${meetingId}`,
-              {
-                from: userId,
-                message: value,
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${userToken}`,
-                },
-              }
-            )
-            .then(response => {
-              onChatSubmit(response.data);
-              container.current.scrollTop = container?.current?.scrollHeight;
-            })
-            .catch(err => console.log(err));
-        }}
-      />
+      <ChatInput handleSubmit={submitInput} />
     </MeetingChatContainer>
   );
 };

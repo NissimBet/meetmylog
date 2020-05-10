@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 import MeetingChat from './MeetingChat';
 import MeetingContent from './MeetingContent';
 import MeetingSidebar from './MeetingSidebar';
-import { BACKEND_URI } from '../../utils/config';
+
+import TagProvider from './../../hooks/chatTag';
 
 const MeetingPageContainer = styled.div`
   display: flex;
@@ -48,21 +48,31 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
     closeMeeting,
   } = props;
 
+  const [tag, setTag] = React.useState('');
+
+  const handleCreate = (username: string) => {
+    console.log(username);
+    setTag(username);
+  };
+
   return (
     <MeetingPageContainer>
-      <MeetingChatContainer
-        chat={chat}
-        creator={creator}
-        meetingId={meetingId}
-        userToken={token}
-        onChatSubmit={onChatSubmit}
-      />
-      <MeetingContentContainer />
-      <MeetingSidebarContainer
-        creator={creator}
-        members={members}
-        handleCloseMeeting={closeMeeting}
-      />
+      <TagProvider>
+        <MeetingChatContainer
+          chat={chat}
+          creator={creator}
+          meetingId={meetingId}
+          userToken={token}
+          onChatSubmit={onChatSubmit}
+        />
+        <MeetingContentContainer />
+        <MeetingSidebarContainer
+          creator={creator}
+          members={members}
+          handleCloseMeeting={closeMeeting}
+          createTag={handleCreate}
+        />
+      </TagProvider>
     </MeetingPageContainer>
   );
 };
