@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 interface TagState {
   tag: string;
   wasSet: boolean;
+  tagOptions: Array<string>;
 }
 
 type ConsumeTag = () => void;
@@ -33,10 +34,9 @@ export function useTagContext() {
 
   const set: SetTag = newTag => {
     tagDispatch({
-      payload: { tag: newTag, wasSet: true },
+      payload: { tag: newTag, wasSet: true, tagOptions: [] },
       type: TagActionTypes.Set,
     });
-    console.log('newTag', newTag);
   };
 
   return {
@@ -51,14 +51,21 @@ function reducer(state: TagState, action: TagAction) {
     case TagActionTypes.Consume:
       return { ...state, tag: '', wasSet: false };
     case TagActionTypes.Set:
-      return { ...state, tag: action?.payload.tag, wasSet: true };
+      return { ...state, tag: action?.payload.tag ?? '', wasSet: true };
   }
 }
 
-export default ({ children }: { children: React.ReactNode }) => {
+export default ({
+  options,
+  children,
+}: {
+  children: React.ReactNode;
+  options: Array<string>;
+}) => {
   const [state, dispatch] = React.useReducer(reducer, {
     tag: '',
     wasSet: false,
+    tagOptions: options,
   });
 
   return <TagProvider value={[state, dispatch]}>{children}</TagProvider>;

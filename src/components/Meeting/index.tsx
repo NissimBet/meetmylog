@@ -57,7 +57,7 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
 
   return (
     <MeetingPageContainer>
-      <TagProvider>
+      <TagProvider options={members.map(member => member.username)}>
         <MeetingChatContainer
           chat={chat}
           creator={creator}

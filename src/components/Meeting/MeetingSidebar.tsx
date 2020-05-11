@@ -85,7 +85,7 @@ const MeetingSidebar: React.FunctionComponent<MeetingSidebarProps> = ({
       <h3>Members of the meeting</h3>
       <ul>
         {members.map(member => (
-          <li key={member.userId} onClick={() => setTag(member.username)}>
+          <li key={member.userId} onClick={() => setTag('@' + member.username)}>
             {member.username}
           </li>
         ))}
