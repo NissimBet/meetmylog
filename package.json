@@ -15,6 +15,7 @@
     "@types/styled-components": "^5.0.1",
     "@types/yup": "^0.26.33",
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
     "formik": "^2.1.4",
     "js-cookie": "^2.2.1",
     "next": "^9.3.2",
