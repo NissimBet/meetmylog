@@ -43,7 +43,6 @@ interface MeetingSidebarProps {
   members: Pick<UserData, 'username' | 'userId'>[];
   creator: MeetingCreator;
   handleCloseMeeting: () => void;
-  createTag: (arg0: string) => void;
   className?: string;
 }
 
@@ -51,7 +50,6 @@ const MeetingSidebar: React.FunctionComponent<MeetingSidebarProps> = ({
   members,
   creator,
   handleCloseMeeting,
-  createTag,
   className,
 }) => {
   const { userId } = useLoginContext();

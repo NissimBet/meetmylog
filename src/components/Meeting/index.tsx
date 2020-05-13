@@ -48,13 +48,6 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
     closeMeeting,
   } = props;
 
-  const [tag, setTag] = React.useState('');
-
-  const handleCreate = (username: string) => {
-    console.log(username);
-    setTag(username);
-  };
-
   return (
     <MeetingPageContainer>
       <TagProvider options={members.map(member => member.username)}>
@@ -70,7 +63,6 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
           creator={creator}
           members={members}
           handleCloseMeeting={closeMeeting}
-          createTag={handleCreate}
         />
       </TagProvider>
     </MeetingPageContainer>

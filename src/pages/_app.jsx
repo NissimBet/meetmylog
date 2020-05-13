@@ -2,7 +2,7 @@ import React from 'react';
 import NextApp from 'next/app';
 import Head from 'next/head';
 
-import PageLayout from '../components/Layout';
+import PageLayout from '../components/layout';
 
 class MyApp extends NextApp {
   render() {
