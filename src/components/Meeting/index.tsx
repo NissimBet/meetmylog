@@ -23,6 +23,8 @@ const MeetingChatContainer = styled(MeetingChat)`
   flex: 2;
   background-color: #aaa;
 
+  overflow: hidden;
+
   min-width: 500px;
   height: 100%;
 `;

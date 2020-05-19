@@ -10,8 +10,8 @@ export const StyledLink = styled.a`
     text-decoration 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 
   &:hover {
-    text-decoration: underline ${({ theme }) => theme.colors.text.secondary};
-    color: ${({ theme }) => theme.colors.text.secondary};
+    text-decoration: underline ${({ theme }) => theme.colors.text.tertiary};
+    color: ${({ theme }) => theme.colors.text.tertiary};
   }
 `;
 

@@ -29,12 +29,9 @@ const GlobalStyle = createGlobalStyle`
 const PageLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 75px calc(100vh - 75px);
+  grid-template-rows: auto auto minmax(500px, 100vh);
   min-height: 100%;
   height: 100%;
-
-  /* background-color: #ccc2; */
-  /* background-color: ${({ theme }) => theme.colors.container.secondary}; */
 `;
 
 const MeetingPageContent = styled.div`
@@ -47,9 +44,17 @@ const PageContent = styled.div`
   margin: 20px auto;
   max-width: 1200px;
   width: 100%;
-  /* background-color: white; */
+`;
 
-  /* border: 1px solid #ccc; */
+const PageTitle = styled.div`
+  background-color: ${({ theme }) => theme.colors.neutral.grey};
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  padding: ${({ theme }) => theme.scaling(2)}px;
+  text-align: center;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Layout: React.FunctionComponent = ({ children }) => {
@@ -59,8 +64,10 @@ const Layout: React.FunctionComponent = ({ children }) => {
       <LoginProvider>
         <GlobalStyle />
         <PageLayout>
-          <Navbar siteTitle="Meet my log" />
-
+          <Navbar siteTitle="Meet My Log" />
+          <PageTitle>
+            <h2>{router.route.split('/')[1] ?? ''}</h2>
+          </PageTitle>
           {router.route.match(/\/meeting\/ongoing\/./) ? (
             <MeetingPageContent>{children}</MeetingPageContent>
           ) : (

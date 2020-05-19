@@ -6,12 +6,10 @@ import { useLoginContext } from '../../hooks/login';
 import Button from '../Button';
 
 const NavbarContainer = styled.div`
-  padding: 20px 0px;
+  padding: ${({ theme }) => theme.scaling(2)}px 0px;
 
   display: flex;
   align-items: center;
-
-  box-shadow: 0 0 4px 2px #0003;
 `;
 
 const NavbarContent = styled.div`
@@ -30,6 +28,10 @@ const NavbarLinks = styled.div`
   align-items: space-evenly;
 `;
 
+const TitleLink = styled(NavLink)`
+  font-size: 28px;
+`;
+
 interface NavbarProps {
   siteTitle: string;
 }
@@ -40,9 +42,11 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
     <NavbarContainer>
       <NavbarContent>
         <NavbarLinks>
-          <NavLink to="/">{siteTitle}</NavLink>
           <NavLink to="/meeting/new">Start a Meeting</NavLink>
           {userId && <NavLink to="/profile">Profile Page</NavLink>}
+        </NavbarLinks>
+        <NavbarLinks>
+          <TitleLink to="/">{siteTitle}</TitleLink>
         </NavbarLinks>
         <NavbarLinks>
           {!userId && (
@@ -52,7 +56,11 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
             </>
           )}
         </NavbarLinks>
-        {userId && <Button onClick={logout}>Logout</Button>}
+        {userId && (
+          <Button variant="outline" onClick={logout}>
+            Logout
+          </Button>
+        )}
       </NavbarContent>
     </NavbarContainer>
   );

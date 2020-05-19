@@ -131,9 +131,11 @@ export const withAuthSync = (WrappedComponent: NextPage) => {
           headers: { Authorization: `Bearer ${token}` },
         });
       } catch (error) {
+        logout();
         redirect(ctx);
       }
     } else {
+      logout();
       redirect(ctx);
     }
 

@@ -6,7 +6,8 @@ import { useTagContext } from '../../../hooks/chatTag';
 
 const Container = styled.div`
   /* box-shadow: 0px -2px 10px 6px #0002; */
-  background-color: #999;
+  background-color: ${({ theme }) => theme.colors.container.secondary};
+  border-top: ${({ theme }) => theme.colors.container.primary} solid 1px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,12 +20,13 @@ const Container = styled.div`
 const Hidden = styled.div<{ open: boolean }>`
   position: absolute;
   width: 100%;
-  max-height: 300px;
+  max-height: 150px;
   left: 0;
   top: 0;
   background-color: white;
   transition: all 0.75s ease;
   transform: translate(0, ${({ open }) => (open ? '-100%' : '0%')});
+  height: ${({ open }) => (open ? '200%' : '0')};
 `;
 
 const Tag = styled.p`
@@ -69,7 +71,7 @@ const Circle = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-color: #ccc;
+  background-color: ${({ theme }) => theme.colors.container.primary};
   border-radius: 50%;
 
   width: 40px;
