@@ -46,8 +46,18 @@ const StyledOutlineButton = styled(StyledButton)`
   }
 `;
 
+const WarningButton = styled(StyledButton)`
+  color: ${({ theme }) => theme?.colors?.text?.primary};
+  background-color: ${({ theme }) => theme?.colors?.container?.contrast};
+
+  &:hover {
+    color: ${({ theme }) => theme?.colors?.text?.bright};
+    background-color: ${({ theme }) => theme?.colors?.container?.secondary};
+  }
+`;
+
 interface ButtonProps {
-  variant?: 'outline';
+  variant?: 'outline' | 'warning';
   className?: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -56,29 +66,25 @@ interface ButtonProps {
 
 const Button: React.FunctionComponent<ButtonProps> = React.forwardRef(
   (
-    { children, variant, className, onClick, ...props },
+    { children, variant, ...props },
     ref: React.RefObject<HTMLButtonElement>
   ) => {
     if (variant === 'outline') {
       return (
-        <StyledOutlineButton
-          ref={ref}
-          className={className}
-          onClick={onClick}
-          {...props}
-        >
+        <StyledOutlineButton {...props} ref={ref}>
           {children}
         </StyledOutlineButton>
       );
     }
-
+    if (variant === 'warning') {
+      return (
+        <WarningButton {...props} ref={ref}>
+          {children}
+        </WarningButton>
+      );
+    }
     return (
-      <StyledButton
-        ref={ref}
-        className={className}
-        onClick={onClick}
-        {...props}
-      >
+      <StyledButton {...props} ref={ref}>
         {children}
       </StyledButton>
     );

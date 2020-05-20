@@ -18,12 +18,18 @@ const NavbarContent = styled.div`
 
   margin: auto;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  justify-content: space-between;
 `;
 
-const NavbarLinks = styled.div`
+const NavbarLinks = styled.div<{ position: 'left' | 'center' | 'right' }>`
+  justify-self: ${({ position }) =>
+    position === 'left'
+      ? 'flex-start'
+      : position === 'center'
+      ? 'center'
+      : 'flex-end'};
   display: flex;
   align-items: space-evenly;
 `;
@@ -41,26 +47,25 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
   return (
     <NavbarContainer>
       <NavbarContent>
-        <NavbarLinks>
+        <NavbarLinks position="left">
           <NavLink to="/meeting/new">Start a Meeting</NavLink>
           {userId && <NavLink to="/profile">Profile Page</NavLink>}
         </NavbarLinks>
-        <NavbarLinks>
+        <NavbarLinks position="center">
           <TitleLink to="/">{siteTitle}</TitleLink>
         </NavbarLinks>
-        <NavbarLinks>
-          {!userId && (
+        <NavbarLinks position="right">
+          {userId ? (
+            <Button variant="outline" onClick={logout}>
+              Logout
+            </Button>
+          ) : (
             <>
-              <NavLink to="/registro">Registrate</NavLink>
+              <NavLink to="/registro">Regístrate</NavLink>
               <NavLink to="/login">Inicia Sesión</NavLink>
             </>
           )}
         </NavbarLinks>
-        {userId && (
-          <Button variant="outline" onClick={logout}>
-            Logout
-          </Button>
-        )}
       </NavbarContent>
     </NavbarContainer>
   );

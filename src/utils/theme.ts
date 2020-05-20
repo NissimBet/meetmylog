@@ -51,10 +51,12 @@ export const theme: ThemeInterface = {
       primary: colors.black,
       secondary: colors.darkblue,
       tertiary: colors.lightblue,
+      bright: colors.yellow,
     },
     container: {
       primary: colors.skyblue,
       secondary: colors.darkblue,
+      contrast: colors.yellow,
     },
   },
   borders: [`1px solid ${colors.darkblue}`, `1px solid ${colors.lightblue}`],
