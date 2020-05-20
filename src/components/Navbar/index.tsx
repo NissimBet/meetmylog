@@ -61,7 +61,7 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
             </Button>
           ) : (
             <>
-              <NavLink to="/registro">Regístrate</NavLink>
+              <NavLink to="/register">Regístrate</NavLink>
               <NavLink to="/login">Inicia Sesión</NavLink>
             </>
           )}

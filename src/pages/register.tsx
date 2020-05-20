@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { Formik, validateYupSchema } from 'formik';
 import styled from 'styled-components';
 import Button from '../components/Button';
-import { Error, Label, Input } from './../components/Form';
+import { Error, Label, Input } from '../components/Form';
 
 import { object, string } from 'yup';
 import axios from 'axios';
@@ -28,6 +28,12 @@ const InputContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin: 10px 0;
+  padding: 10px 15px;
+
+  border: 1px solid ${({ theme }) => theme.colors.container.primary};
+  border-radius: 15px;
+
+  background-color: ${({ theme }) => theme.colors.container.contrast};
 
   ${Label} {
     flex: 2;
@@ -35,6 +41,7 @@ const InputContainer = styled.div`
 
   ${Input} {
     flex: 3;
+    border-radius: 10px;
   }
 `;
 
@@ -42,17 +49,20 @@ const InputContainer = styled.div`
 const FormValidation = object().shape({
   username: string()
     /* .min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo') */
-    .required('Por favor ingrese su nombre de usuario'),
+    .required('Please enter your username'),
   email: string()
-    .email('Favor ingresa un correo válido')
-    .required('Favor ingresa un correo válido'),
+    .email('Please enter a valid email address like email@site.com')
+    .required('Please enter your email address'),
   password: string()
-    .required('Favor de ingresar su contraseña')
-    .matches(/[a-zA-Z0-9]*/, 'Solo debe contener numeros y letras')
-    .min(8, 'La contraseña debe ser al menos 8 caracteres largo'),
+    .required('Please enter your password')
+    .matches(
+      /[a-zA-Z0-9!$%$@]*/,
+      'The password can only contain numbers, letters or special characters'
+    )
+    .min(8, 'The password must be at least 8 characters long'),
   confirmPassword: string()
-    .required('Favor vuelva a ingresar su contraseña')
-    .test('passwords-match', 'La contraseñas no son iguales', function(val) {
+    .required('Please reenter your password')
+    .test('passwords-match', 'Passwords do not match', function(val) {
       return this.parent.password === val;
     }),
 });
@@ -63,17 +73,16 @@ const PaginaRegistro: NextPage = () => {
   return (
     <React.Fragment>
       <Head>
-        <title>Registro</title>
+        <title>Register</title>
       </Head>
       <div
         style={{
           maxWidth: '800px',
           margin: 'auto',
-          border: '1px solid #ccc',
+          // border: '1px solid #ccc',
           padding: '40px',
         }}
       >
-        <h1>Registrate</h1>
         {/* Manejador de formularios, se encarga de muchas cosas que hacen todo mas tedioso */}
         <Formik
           initialValues={{
@@ -125,7 +134,7 @@ const PaginaRegistro: NextPage = () => {
             <form onSubmit={handleSubmit}>
               <FormContent>
                 <InputContainer>
-                  <Label htmlFor="username">Nombre de Usuario</Label>
+                  <Label htmlFor="username">Username</Label>
                   <Input
                     type="text"
                     name="username"
@@ -142,7 +151,7 @@ const PaginaRegistro: NextPage = () => {
                 )}
 
                 <InputContainer>
-                  <Label htmlFor="email">Correo</Label>
+                  <Label htmlFor="email">Email</Label>
                   <Input
                     type="email"
                     name="email"
@@ -156,7 +165,7 @@ const PaginaRegistro: NextPage = () => {
                 {errors.email && touched.email && <Error>{errors.email}</Error>}
 
                 <InputContainer>
-                  <Label htmlFor="password">Contraseña</Label>
+                  <Label htmlFor="password">Password</Label>
                   <Input
                     type="password"
                     name="password"
@@ -172,9 +181,7 @@ const PaginaRegistro: NextPage = () => {
                 )}
 
                 <InputContainer>
-                  <Label htmlFor="confirmPassword">
-                    Confirma tu contraseña
-                  </Label>
+                  <Label htmlFor="confirmPassword">Confirm your password</Label>
                   <Input
                     type="password"
                     name="confirmPassword"
@@ -195,7 +202,7 @@ const PaginaRegistro: NextPage = () => {
               )}
 
               <Button type="submit" disabled={isSubmitting}>
-                Enviar
+                Submit
               </Button>
             </form>
           )}
