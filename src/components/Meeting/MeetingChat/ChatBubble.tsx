@@ -10,12 +10,12 @@ const Author = styled.p`
 
 const Bubble = styled.div<{ identifier: string }>`
   border-radius: 7.5px;
-  background-color: white;
-  border: 1px solid #aaa;
+  background-color: ${({ theme }) => theme.colors.neutral.white};
+
   padding: 6px 7px 8px 9px;
   max-width: 75%;
 
-  box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+  /* box-shadow: ${({ theme }) => theme.shadows[1]}; */
 
   /* Quitar el texto de la persona para cada mensaje seguido */
   &.${props => props.identifier} + &.${props => props.identifier} ${Author} {

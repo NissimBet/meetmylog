@@ -16,6 +16,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: ${({ theme }) => theme.colors.container.secondary};
 `;
 
 const ChatContainer = styled.div`
@@ -30,7 +31,6 @@ const Bubble = styled(ChatBubble)<{ self: boolean }>`
   align-self: ${({ self }) => (self ? 'flex-end' : 'flex-start')};
 
   ${props => props.self && `& p:nth-child(1) {display: none;}`}
-  ${props => props.self && `background-color: #DCf8C6;`}
 `;
 
 interface MeetingChatProps {
