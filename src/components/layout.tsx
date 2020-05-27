@@ -40,16 +40,19 @@ const MeetingPageContent = styled.div`
 `;
 
 const PageContent = styled.div`
-  padding: 10px 20px;
-  margin: 20px auto;
-  max-width: 1200px;
+  padding: 00px 0px;
+  margin: 0px auto;
+
   width: 100%;
 `;
+// le he cambiado el max-width (era   max-width: 1200px;) para que me deje poner las fotos a full width
+// el padding era padding: 10px 20px;
 
 const PageTitle = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral.grey};
   color: ${({ theme }) => theme.colors.text.tertiary};
-  padding: ${({ theme }) => theme.scaling(2)}px;
+  // padding: ${({ theme }) => theme.scaling(2)}px;
+  padding: 2px;
   text-align: center;
   text-transform: capitalize;
   display: flex;
@@ -64,7 +67,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
       <LoginProvider>
         <GlobalStyle />
         <PageLayout>
-          <Navbar siteTitle="Meet My Log" />
+          <Navbar siteTitle="meetmylog" />
           <PageTitle>
             <h2>{router.route.split('/')[1] ?? ''}</h2>
           </PageTitle>

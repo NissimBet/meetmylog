@@ -3,19 +3,33 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 const Container = styled.div`
-  min-height: 400px;
-  padding: 50px 0;
+  min-height: 500px;
+
+  padding: 90px 0;
   background-color: #ccc2;
+
+  background: url('https://images2.imgbox.com/ac/c0/ZibqJNBT_o.jpg')
+    center/cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
 `;
+// backdrop-filter: blur(5px);
+// background-image: url('https://images2.imgbox.com/a3/fb/ZJ2y2pZn_o.jpg');/
 
 const Content = styled.div`
   max-width: 750px;
   width: 100%;
   padding: 0 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Title = styled.h1`
   margin-bottom: 10px;
+  font-size: 36px;
+  text-shadow: 0px 1px 1px #000;
 `;
 
 const Paragraph = styled.p`
@@ -35,13 +49,9 @@ const HomeIntro: React.FunctionComponent = ({}) => {
   return (
     <Container>
       <Content>
-        <Title>Bienvenido a Meet My Log</Title>
-        <Paragraph>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi
-          suscipit ut voluptatibus blanditiis voluptatem doloremque perferendis
-          impedit. Voluptate, labore ullam?
-        </Paragraph>
-        <StartButton>Start</StartButton>
+        <Title>Conoce Meet My Log</Title>
+        <Paragraph>No te pierdas tus juntas importantes. Nunca más.</Paragraph>
+        <StartButton>Crea una cuenta</StartButton>
       </Content>
     </Container>
   );
