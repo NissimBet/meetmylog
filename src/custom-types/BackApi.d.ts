@@ -30,7 +30,7 @@ interface GroupData {
   _id: string;
   groupId: string;
   name: string;
-  creator: string;
-  members: Omit<UserData, 'email'>[];
-  meetings: string[];
+  creator: UserData;
+  members: UserData[];
+  meetings: MeetingData[];
 }

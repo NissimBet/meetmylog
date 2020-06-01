@@ -1,6 +1,8 @@
 import React from 'react';
 import NextApp from 'next/app';
 import Head from 'next/head';
+import {} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import PageLayout from '../components/layout';
 

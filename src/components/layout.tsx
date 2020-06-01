@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    /* height: 100vh; */
+    height: 100vh;
     font-family: sans-serif;
   }
 

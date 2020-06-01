@@ -46,18 +46,16 @@ const StyledOutlineButton = styled(StyledButton)`
   }
 `;
 
-const WarningButton = styled(StyledButton)`
-  color: ${({ theme }) => theme?.colors?.text?.primary};
-  background-color: ${({ theme }) => theme?.colors?.container?.contrast};
+const StyledRoundButton = styled(StyledButton)`
+    position: relative;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
 
-  &:hover {
-    color: ${({ theme }) => theme?.colors?.text?.bright};
-    background-color: ${({ theme }) => theme?.colors?.container?.secondary};
-  }
-`;
+`;1
 
 interface ButtonProps {
-  variant?: 'outline' | 'warning';
+  variant?: 'outline' | 'round';
   className?: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -66,25 +64,40 @@ interface ButtonProps {
 
 const Button: React.FunctionComponent<ButtonProps> = React.forwardRef(
   (
-    { children, variant, ...props },
+    { children, variant, className, onClick, ...props },
     ref: React.RefObject<HTMLButtonElement>
   ) => {
     if (variant === 'outline') {
       return (
-        <StyledOutlineButton {...props} ref={ref}>
+        <StyledOutlineButton
+          ref={ref}
+          className={className}
+          onClick={onClick}
+          {...props}
+        >
           {children}
         </StyledOutlineButton>
       );
     }
-    if (variant === 'warning') {
+    else if(variant === 'round'){ 
       return (
-        <WarningButton {...props} ref={ref}>
+        <StyledRoundButton
+          ref={ref}
+          className={className}
+          onClick={onClick}
+          {...props}
+        >
           {children}
-        </WarningButton>
+        </StyledRoundButton>
       );
     }
     return (
-      <StyledButton {...props} ref={ref}>
+      <StyledButton
+        ref={ref}
+        className={className}
+        onClick={onClick}
+        {...props}
+      >
         {children}
       </StyledButton>
     );
