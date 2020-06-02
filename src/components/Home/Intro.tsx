@@ -6,7 +6,7 @@ const Container = styled.div`
   min-height: 500px;
 
   padding: 90px 0;
-  background-color: #ccc2;
+  background-color: #f8f8f8;
 
   background: url('https://images2.imgbox.com/ac/c0/ZibqJNBT_o.jpg')
     center/cover;
@@ -14,8 +14,6 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 `;
-// backdrop-filter: blur(5px);
-// background-image: url('https://images2.imgbox.com/a3/fb/ZJ2y2pZn_o.jpg');/
 
 const Content = styled.div`
   max-width: 750px;

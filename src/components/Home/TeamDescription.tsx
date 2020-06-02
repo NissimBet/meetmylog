@@ -3,37 +3,53 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   /* margin: 20px 0; */
-  background: #ccc2;
-
+  background: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   padding: 40px 30px;
   min-height: 400px;
 
   h3 {
-    margin-bottom: 10px;
+    margin-bottom: 25px;
+    font-size: 20px;
   }
 
   p {
-    margin: 5px 0;
+    margin: 10px 0;
+    line-height: 1.5;
   }
+`;
+
+const Wrapper = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Team: React.FunctionComponent = () => {
   return (
     <Container>
-      <h3>Quienes somos</h3>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque omnis
-        similique, repellat ipsum reprehenderit vel illum alias. Odio
-        voluptatibus tenetur a autem distinctio beatae expedita alias? Quasi
-        facilis optio quidem?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit, dolores
-        quam eaque in consectetur sequi officia voluptate? Laudantium distinctio
-        aut quis, incidunt nam iste laboriosam? Accusamus sint quos laborum
-        necessitatibus. Nesciunt modi ipsum est quidem tenetur, assumenda sunt
-        itaque iure fuga hic sed aperiam et quo explicabo veritatis esse omnis.
-      </p>
+      <Wrapper>
+        <h3>Quienes Somos</h3>
+        <p>
+          AP4 es una startup dedicada a proveer soluciones de productividad en
+          la industria del conocimiento. <strong>Meet my log</strong> es una de
+          las iniciativas que buscan digitalizar el entorno laboral corporativo,
+          haciendo más sencilla la colaboración presencial o a distancia.
+        </p>
+        <p>
+          Meetmylog es una aplicación de código abierto en la que puedes
+          colaborar en{' '}
+          <a href="https://github.com/NissimBet/meetmylog" target="_blank">
+            Github
+          </a>
+          , hacer una pull request y ayudar a reimaginar la experiencia con
+          minutas y reuniones en tu compañía.
+        </p>
+      </Wrapper>
     </Container>
   );
 };
