@@ -52,7 +52,6 @@ const StyledRoundButton = styled(StyledButton)`
   width: 35px;
   border-radius: 50%;
 `;
-1;
 
 interface ButtonProps {
   variant?: 'outline' | 'round';

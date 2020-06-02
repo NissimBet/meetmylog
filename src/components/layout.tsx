@@ -51,7 +51,7 @@ const PageContent = styled.div`
 const PageTitle = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral.grey};
   color: ${({ theme }) => theme.colors.text.tertiary};
-  // padding: ${({ theme }) => theme.scaling(2)}px;
+  /* padding: ${({ theme }) => theme.scaling(2)}px; */
   padding: 2px;
   text-align: center;
   text-transform: capitalize;

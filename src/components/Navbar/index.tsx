@@ -67,11 +67,6 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
             </>
           )}
         </NavbarLinks>
-        {userId && (
-          <Button variant="outline" onClick={logout}>
-            Log Out
-          </Button>
-        )}
       </NavbarContent>
     </NavbarContainer>
   );

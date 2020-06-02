@@ -35,10 +35,10 @@ const Title = styled.h1`
   font-size: 1.3em;
   padding-top: 10px;
   padding-bottom: 20px;
-  // margin-block-start: 1em;
+  /* // margin-block-start: 1em;
   // margin-block-end: 1em;
   // margin-inline-start: 0px;
-  // margin-inline-end: 0px;
+  // margin-inline-end: 0px; */
 `;
 
 const Paragraph = styled.p`
