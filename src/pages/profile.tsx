@@ -58,6 +58,7 @@ interface ProfilePageProps {
 const ProfilePage: NextPage<ProfilePageProps> = props => {
   // token del usuario recibido del componente de autorizacion
   const token = props.token || '';
+  console.log(token);
   // tomar el id del usuario que esta iniciado sesion, del context
   const { userId } = useLoginContext();
 
@@ -69,7 +70,10 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
   useEffect(() => {
     // sacar datos del usuario
     axios
-      .get(`${BACKEND_URI}/user/get/${userId}`, {
+      .get(`${BACKEND_URI}/user/get`, {
+        params: {
+          userId: userId,
+        },
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -100,6 +104,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
       })
       .then(data => {
         setGroups(data.data);
+        console.log(data.data);
       })
       .catch(err => console.log(err));
   }, []);
@@ -108,10 +113,11 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
     meetings || [],
     meeting => meeting.ongoing
   );
-
+  console.log(groups);
   const [leaderGroups, memberGroups] = partitionArray(
     groups || [],
-    group => group.creator == userId
+    //@ts-ignore
+    group => group.creator === data._id
   );
 
   return (
@@ -149,8 +155,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
             {groups && (
               <LeaderGroups>
                 <SectionTitle>Your are a leader of</SectionTitle>
-
-                <GroupsList groups={leaderGroups} />
+                <GroupsList groups={leaderGroups} columns={3} />
               </LeaderGroups>
             )}
           </Container>

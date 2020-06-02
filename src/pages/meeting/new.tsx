@@ -82,9 +82,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
   // state para guardar los datos de los grupos del usuario
   const [groups, setGroups] = useState<GroupData[]>([]);
   // estado para los miembros unicos de todos los grupos
-  const [uniqueMembers, setUniqueMembers] = useState<
-    Omit<UserData, 'email'>[]
-  >();
+  const [uniqueMembers, setUniqueMembers] = useState<UserData[]>([]);
 
   // use effect cuando el componente se carga
   useEffect(() => {
@@ -105,7 +103,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
   // useEffect que se ejecuta cuando groups cambia
   useEffect(() => {
     // arreglo de los miembros unicos
-    const unique: Omit<UserData, 'email'>[] = [];
+    const unique: UserData[] = [];
 
     groups
       // crear un arreglo solo con los miembros
@@ -123,6 +121,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
             name: member.name,
             userId: member.userId,
             username: member.username,
+            email: member.email,
           });
         }
       });
@@ -158,6 +157,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
           } else if (values.share_method === 'members') {
             // members solo tiene los id de los miembros
             meetingMembers.push(...values.members);
+            values.groupId = '0';
           }
 
           // hacer el request
@@ -168,6 +168,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                 creator: userId,
                 members: meetingMembers,
                 meetingName: values.meetingName,
+                groupId: values.groupId,
               },
               {
                 headers: {

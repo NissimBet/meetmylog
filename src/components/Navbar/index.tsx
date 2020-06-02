@@ -50,6 +50,7 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
         <NavbarLinks position="left">
           <NavLink to="/meeting/new">Inicia una Reunión</NavLink>
           {userId && <NavLink to="/profile">Mi Perfil</NavLink>}
+          {userId && <NavLink to="/team/new">Crea un equipo</NavLink>}
         </NavbarLinks>
         <NavbarLinks position="center">
           <TitleLink to="/">{siteTitle}</TitleLink>
@@ -61,11 +62,16 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
             </Button>
           ) : (
             <>
-              <NavLink to="/register">Regístrate</NavLink>
+              <NavLink to="/registro">Registrate</NavLink>
               <NavLink to="/login">Inicia Sesión</NavLink>
             </>
           )}
         </NavbarLinks>
+        {userId && (
+          <Button variant="outline" onClick={logout}>
+            Logout
+          </Button>
+        )}
       </NavbarContent>
     </NavbarContainer>
   );
