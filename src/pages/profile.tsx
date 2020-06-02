@@ -126,7 +126,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
         <title>{data ? `Tu Perfil | ${data.name}` : 'Cargando'}</title>
       </Head>
       {data ? (
-        <div>
+        <div style={{ maxWidth: '1200px', margin: 'auto' }}>
           <Username>{data.username}</Username>
 
           <Container>
