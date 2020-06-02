@@ -226,10 +226,6 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                   values={[
                     { label: '', value: '' },
                     { label: 'Existing team', value: 'groupId' },
-                    {
-                      label: 'Generate share link',
-                      value: 'share_link',
-                    },
                     { label: 'By usernames', value: 'members' },
                   ]}
                 />
