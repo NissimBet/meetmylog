@@ -6,6 +6,7 @@ import MeetingContent from './MeetingContent';
 import MeetingSidebar from './MeetingSidebar';
 
 import TagProvider from './../../hooks/chatTag';
+import CommandProvider from './../../hooks/chatCommand';
 
 const MeetingPageContainer = styled.div`
   display: flex;
@@ -39,6 +40,8 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
   token: string;
   onChatSubmit: (arg0: Chat) => void;
   closeMeeting: () => void;
+  onCommandSubmit: (arg0: Responsabilities) => void;
+  handleResponsabilityD: (id: string) => void;
 }> = props => {
   const {
     chat,
@@ -47,25 +50,40 @@ const MeetingPage: React.FunctionComponent<MeetingData & {
     token,
     onChatSubmit,
     members,
+    responsabilities,
+    notes,
     closeMeeting,
+    onCommandSubmit,
+    handleResponsabilityD,
   } = props;
-
+  console.log(responsabilities);
   return (
     <MeetingPageContainer>
-      <TagProvider options={members.map(member => member.username)}>
-        <MeetingChatContainer
-          chat={chat}
-          creator={creator}
-          meetingId={meetingId}
-          userToken={token}
-          onChatSubmit={onChatSubmit}
-        />
-        <MeetingContentContainer />
-        <MeetingSidebarContainer
-          creator={creator}
-          members={members}
-          handleCloseMeeting={closeMeeting}
-        />
+      <TagProvider options={members}>
+        <CommandProvider options={['resp']}>
+          <MeetingChatContainer
+            chat={chat}
+            creator={creator}
+            meetingId={meetingId}
+            userToken={token}
+            onChatSubmit={onChatSubmit}
+            onCommandSubmit={onCommandSubmit}
+          />
+          <MeetingContentContainer
+            userToken={token}
+            meetingId={meetingId}
+            notes={notes}
+          />
+          <MeetingSidebarContainer
+            creator={creator}
+            members={members}
+            meetingId={meetingId}
+            userToken={token}
+            handleCloseMeeting={closeMeeting}
+            respons={responsabilities}
+            handleResponsabilityD={handleResponsabilityD}
+          />
+        </CommandProvider>
       </TagProvider>
     </MeetingPageContainer>
   );

@@ -8,6 +8,7 @@ import { BACKEND_URI } from '../../../utils/config';
 import { useLoginContext } from '../../../hooks/login';
 import { withAuthSync } from '../../../utils/authentication';
 import { NextScript } from 'next/document';
+import MeetingPage from '../../../components/Meeting/Archived';
 
 interface ArchivedMeetingPageProps {
   token: string;
@@ -47,33 +48,21 @@ const ArchivedMeetingPage: NextPage<ArchivedMeetingPageProps> = props => {
     );
   }
   return (
-    <div>
+    <React.Fragment>
       <Head>
-        <title>Archived Meeting | {meetingData?.meetingName}</title>
+        <title>{meetingData ? meetingData.meetingName : 'Cargando'}</title>
       </Head>
-
-      <h1>{meetingData.meetingName}</h1>
-
-      <div>
-        <h2>aqui van los miembros</h2>
-        <h2>aqui pueden ir highlights</h2>
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
-        <div>
-          <h2>Aqui va el doc supongo</h2>
-        </div>
-        <div>
-          <h2>Aqui va el chat o algo supongo</h2>
-        </div>
-      </div>
-    </div>
+      {meetingData ? (
+        <MeetingPage
+          {...meetingData}
+          chat={meetingData.chat}
+          responsabilities={meetingData.responsabilities}
+          token={token}
+        />
+      ) : (
+        <h1>Loading ...</h1>
+      )}
+    </React.Fragment>
   );
 };
 

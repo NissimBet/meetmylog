@@ -231,7 +231,7 @@ const TeamPage: NextPage<{ token: string }> = props => {
           <Modal display={disp}>
             <ModalContent>
               <ModalHeader
-                title={'Agregar miembro'}
+                title={'Add member'}
                 color={'#428bca'}
                 handleSelect={() => setDisp('none')}
               />

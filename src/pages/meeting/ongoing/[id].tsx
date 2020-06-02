@@ -16,6 +16,9 @@ const Meeting: NextPage<{ token: string }> = props => {
   const [chat, setChat] = useState<Chat[]>();
   const [socket, setSocket] = useState<SocketIOClient.Socket>(null);
   const [message, setNewMessage] = useState<Chat>(null);
+  const [responsabilites, setRespons] = useState<Responsabilities[]>();
+  const [responsability, setNewRespons] = useState<Responsabilities>(null);
+  const [responsabilityDel, setDelRespons] = useState<string>(null);
 
   const router = useRouter();
 
@@ -28,6 +31,7 @@ const Meeting: NextPage<{ token: string }> = props => {
         },
       })
       .then(({ data }: { data: MeetingData }) => {
+        console.log(data);
         if (!data.ongoing) {
           router.replace('/profile');
         } else {
@@ -35,7 +39,7 @@ const Meeting: NextPage<{ token: string }> = props => {
           setMeetingData(data);
           // separar los datos del chat, que caambian mas seguido
           setChat([...data.chat]);
-
+          setRespons([...data.responsabilities]);
           setSocket(io(`${BACKEND_URI}`));
         }
       })
@@ -63,8 +67,15 @@ const Meeting: NextPage<{ token: string }> = props => {
       socket.on(`message`, (data: Chat) => {
         // console.table(chat);
         setNewMessage(data);
+
         // console.table(chat);
         // console.log(data);
+      });
+      socket.on(`command`, (data: Responsabilities) => {
+        setNewRespons(data);
+      });
+      socket.on(`delete responsability`, (data: string) => {
+        setDelRespons(data);
       });
     }
   }, [socket]);
@@ -74,6 +85,25 @@ const Meeting: NextPage<{ token: string }> = props => {
       setChat([...chat, message]);
     }
   }, [message]);
+
+  useEffect(() => {
+    if (responsability) {
+      setRespons([...responsabilites, responsability]);
+    }
+  }, [responsability]);
+
+  useEffect(() => {
+    if (responsabilityDel) {
+      const index = responsabilites.findIndex(
+        obj => obj._id === responsabilityDel
+      );
+      const newArr = [
+        ...responsabilites.slice(0, index),
+        ...responsabilites.slice(index + 1),
+      ];
+      setRespons(newArr);
+    }
+  }, [responsabilityDel]);
 
   const closeMeeting = async () => {
     return axios
@@ -90,17 +120,20 @@ const Meeting: NextPage<{ token: string }> = props => {
         setTimeout(() => Router.push('/profile'), 1000);
       });
   };
-
+  console.log(chat);
+  console.log(responsabilites);
   return (
     <React.Fragment>
       <Head>
         <title>{meetingData ? meetingData.meetingName : 'Cargando'}</title>
       </Head>
-      {meetingData && chat ? (
+      {meetingData && chat && responsabilites ? (
         <MeetingPage
           {...meetingData}
           chat={chat}
+          responsabilities={responsabilites}
           token={token}
+          notes={meetingData.notes}
           closeMeeting={closeMeeting}
           onChatSubmit={newChat => {
             // cuando se le da enter, al chat, emitir el mensaje al socket / server
@@ -109,6 +142,25 @@ const Meeting: NextPage<{ token: string }> = props => {
             }
             // agregar el mensaje al chat
             setChat([...chat, newChat]);
+          }}
+          onCommandSubmit={newComm => {
+            if (socket) {
+              socket.emit(`command`, newComm);
+            }
+            // agregar el mensaje al chat
+            setRespons([...responsabilites, newComm]);
+          }}
+          handleResponsabilityD={id => {
+            console.log(id);
+            const index = responsabilites.findIndex(obj => obj._id === id);
+            const newArr = [
+              ...responsabilites.slice(0, index),
+              ...responsabilites.slice(index + 1),
+            ];
+            if (socket) {
+              socket.emit(`delete responsability`, id);
+            }
+            setRespons(newArr);
           }}
         />
       ) : (
