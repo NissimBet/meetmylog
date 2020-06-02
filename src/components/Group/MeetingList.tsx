@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const Tabs = styled.div`
   overflow: hidden;
   background: #fff;
-  font-family: Open Sans;
   height: 3em;
 `;
 

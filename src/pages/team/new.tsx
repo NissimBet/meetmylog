@@ -146,7 +146,7 @@ const CreateTeamPage: NextPage<{ token: string }> = props => {
                     )
                     .then(response => {
                     // si todo bien, ir al meeting
-                        if(!values.members.some(e => e._id == response.data._id)){
+                        if(!values.members.some(e => e._id == response.data._id) && response.data.userId != userId){
                             values.members.push(response.data);
                             actions.setFieldValue('memberEmail','')
                             actions.setSubmitting(false);
@@ -164,7 +164,6 @@ const CreateTeamPage: NextPage<{ token: string }> = props => {
                 });                
             }
             else{
-                console.log("aaaaa")
                 // hacer el request
                 axios
                     .post(

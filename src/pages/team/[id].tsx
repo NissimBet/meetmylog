@@ -186,6 +186,7 @@ const TeamPage: NextPage<{ token: string }> = props => {
           })
           .then(data => {
             setGroups(data.data);
+            
           })
           .catch(err => console.log(err));
 
@@ -212,7 +213,8 @@ const TeamPage: NextPage<{ token: string }> = props => {
           </div>
         );
       }
-      console.log(groups);
+
+      console.log(groups.members);
       return (
         <React.Fragment>
           <Head>
@@ -309,7 +311,7 @@ const TeamPage: NextPage<{ token: string }> = props => {
                         <FormContent>
                           <InputContainer2>
                             <Label htmlFor="add_member">
-                              Agrega miembros al equipo
+                              Add members to the team
                             </Label>
                             <Input 
                               type="text"
@@ -331,7 +333,7 @@ const TeamPage: NextPage<{ token: string }> = props => {
                             )}
                             <MiembrosContainer>
                             <Label htmlFor="current_member">
-                              Miembros:
+                              Members:
                             </Label>
                             <UsersList
                                 variant='options'
@@ -364,10 +366,10 @@ const TeamPage: NextPage<{ token: string }> = props => {
               </Modal>
               <Modal display={dispR}>
                 <ModalContent>
-                  <ModalHeader title={'¿Seguro que quieres eliminar a '+ userR.name + ' del grupo?'} fontC={'#000'} color={'#ffffff'} handleSelect={() => setDispR('none')}/>
+                  <ModalHeader title={'Do you want to remove '+ userR.name + ' from the team?'} fontC={'#000'} color={'#ffffff'} handleSelect={() => setDispR('none')}/>
                     <ModalFooter color={'#ffffff'}>
                       <ButtonYes type="submit" onClick={() => removeMember(groups.groupId, userR._id, token)}>
-                          Si
+                          Yes
                       </ButtonYes>
                       <ButtonNo type="submit" onClick={() => setDispR('none')}>
                           No

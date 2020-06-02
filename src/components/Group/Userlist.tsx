@@ -120,7 +120,7 @@ const UsersListG: React.FunctionComponent<UsersListProps> = ({
           selected={selected.includes(member.userId)}
           onClick={() => handleSelect(member.userId)}
         >
-          {member.username}
+          {member.username + (creator === member.userId ? ' (creator)' : '')}
         </User>
       ))}
     </Container>
