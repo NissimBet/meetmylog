@@ -35,7 +35,7 @@ const NavbarLinks = styled.div<{ position: 'left' | 'center' | 'right' }>`
 `;
 
 const TitleLink = styled(NavLink)`
-  font-size: 28px;
+  font-size: 24px;
 `;
 
 interface NavbarProps {
@@ -49,25 +49,24 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
       <NavbarContent>
         <NavbarLinks position="left">
           <NavLink to="/meeting/new">Start a Meeting</NavLink>
-          {userId && <NavLink to="/profile">Profile Page</NavLink>}
+          {userId && <NavLink to="/profile">My Profile</NavLink>}
           {userId && <NavLink to="/team/new">Create a Team</NavLink>}
         </NavbarLinks>
         <NavbarLinks position="center">
           <TitleLink to="/">{siteTitle}</TitleLink>
         </NavbarLinks>
         <NavbarLinks position="right">
-          {!userId && (
+          {userId ? (
+            <Button variant="outline" onClick={logout}>
+              Log Out
+            </Button>
+          ) : (
             <>
-              <NavLink to="/registro">Registrate</NavLink>
-              <NavLink to="/login">Inicia Sesión</NavLink>
+              <NavLink to="/registro">Sign Up</NavLink>
+              <NavLink to="/login">Log In</NavLink>
             </>
           )}
         </NavbarLinks>
-        {userId && (
-          <Button variant="outline" onClick={logout}>
-            Logout
-          </Button>
-        )}
       </NavbarContent>
     </NavbarContainer>
   );

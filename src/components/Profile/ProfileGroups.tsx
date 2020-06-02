@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import CustomLink from '../Link';
 
-
 const GroupsList = styled.div<{ cols: number }>`
   display: grid;
   grid-template-rows: 1fr;
@@ -18,7 +17,7 @@ const GroupItem = styled.p`
   padding: 10px 15px;
   /* box-shadow: 0px 4px 7px 1px #cccccc5c; */
   &:hover {
-    cursor:pointer;
+    cursor: pointer;
     text-decoration: underline;
   }
 `;
@@ -35,15 +34,9 @@ const ProfileGroups: React.FunctionComponent<ProfileGroupsProps> = ({
   return (
     <GroupsList cols={columns}>
       {groups.map(group => (
-        <CustomLink
-        to={`/team/${group.groupId}`
-        }
-        key={group.groupId}
-        >
-         <GroupItem> 
-          {group.name} 
-        </GroupItem>
-      </CustomLink>
+        <CustomLink to={`/team/${group.groupId}`} key={group.groupId}>
+          <GroupItem>{group.name}</GroupItem>
+        </CustomLink>
       ))}
     </GroupsList>
   );

@@ -168,7 +168,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                 creator: userId,
                 members: meetingMembers,
                 meetingName: values.meetingName,
-                groupId: values.groupId
+                groupId: values.groupId,
               },
               {
                 headers: {
@@ -285,7 +285,6 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                   />
                 </SelectionContainer>
               )}
-              
             </FormContent>
 
             <Button type="submit" disabled={formikBag.isSubmitting}>

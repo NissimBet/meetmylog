@@ -3,7 +3,6 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import styled from 'styled-components';
 
-
 import axios from 'axios';
 
 import { PersonalMeetings, GroupsList } from '../components/Profile';
@@ -72,8 +71,8 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
     // sacar datos del usuario
     axios
       .get(`${BACKEND_URI}/user/get`, {
-        params:{
-          userId: userId
+        params: {
+          userId: userId,
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -118,7 +117,7 @@ const ProfilePage: NextPage<ProfilePageProps> = props => {
   const [leaderGroups, memberGroups] = partitionArray(
     groups || [],
     //@ts-ignore
-    group => group.creator === data._id 
+    group => group.creator === data._id
   );
 
   return (

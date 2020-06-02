@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ModalContent =styled.div`
+export const ModalContent = styled.div`
   margin: 10% auto;
   width: 60%;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);

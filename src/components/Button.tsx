@@ -47,12 +47,11 @@ const StyledOutlineButton = styled(StyledButton)`
 `;
 
 const StyledRoundButton = styled(StyledButton)`
-    position: relative;
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-
-`;1
+  position: relative;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+`;
 
 interface ButtonProps {
   variant?: 'outline' | 'round';
@@ -78,8 +77,7 @@ const Button: React.FunctionComponent<ButtonProps> = React.forwardRef(
           {children}
         </StyledOutlineButton>
       );
-    }
-    else if(variant === 'round'){ 
+    } else if (variant === 'round') {
       return (
         <StyledRoundButton
           ref={ref}
