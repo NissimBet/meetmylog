@@ -1,13 +1,14 @@
 import React from 'react';
 
 interface TagState {
-  tag: string;
+  //@ts-ignore
+  tag: Pick<UserData, 'userId', 'username'>;
   wasSet: boolean;
-  tagOptions: Array<string>;
+  tagOptions: Array<UserData>;
 }
 
 type ConsumeTag = () => void;
-type SetTag = (arg0: string) => void;
+type SetTag = (arg0: UserData) => void;
 
 enum TagActionTypes {
   Consume,
@@ -49,9 +50,9 @@ export function useTagContext() {
 function reducer(state: TagState, action: TagAction) {
   switch (action.type) {
     case TagActionTypes.Consume:
-      return { ...state, tag: '', wasSet: false };
+      return { ...state, tag: {userId: '', name: '', username: ''}, wasSet: false };
     case TagActionTypes.Set:
-      return { ...state, tag: action?.payload.tag ?? '', wasSet: true };
+      return { ...state, tag: action?.payload.tag ?? {userId: '', name: '', username: ''}, wasSet: true };
   }
 }
 
@@ -60,10 +61,10 @@ export default ({
   children,
 }: {
   children: React.ReactNode;
-  options: Array<string>;
+  options: Array<UserData>;
 }) => {
   const [state, dispatch] = React.useReducer(reducer, {
-    tag: '',
+    tag: {userId: '', name: '', username: ''},
     wasSet: false,
     tagOptions: options,
   });

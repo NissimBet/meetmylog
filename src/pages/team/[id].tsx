@@ -224,7 +224,7 @@ const TeamPage: NextPage<{ token: string }> = props => {
             <div>
               <Modal display={disp}>
                 <ModalContent>
-                  <ModalHeader title={'Agregar miembro'} color={'#428bca'} handleSelect={() => setDisp('none')}/>
+                  <ModalHeader title={'Add member'} color={'#428bca'} handleSelect={() => setDisp('none')}/>
                   <ModalBody>
                   <Formik
                     initialValues={{

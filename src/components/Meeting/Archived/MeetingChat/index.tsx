@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import ChatInput from './ChatInput';
 import ChatBubble from './ChatBubble';
-import { BACKEND_URI } from '../../../utils/config';
-import { useLoginContext } from '../../../hooks/login';
-import { useTagContext } from '../../../hooks/chatTag';
+import { useLoginContext } from '../../../../hooks/login';
 import { REPLCommand } from 'repl';
 
 
@@ -42,8 +38,6 @@ interface MeetingChatProps {
   creator: MeetingCreator;
   meetingId: string;
   userToken: string;
-  onChatSubmit: (arg0: Chat) => void;
-  onCommandSubmit: (arg0: Responsabilities) => void;
 }
 
 interface message{
@@ -58,61 +52,9 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
   creator,
   meetingId,
   userToken,
-  onChatSubmit,
-  onCommandSubmit,
 }) => {
   const { userId } = useLoginContext();
   const container = useRef<HTMLDivElement>();
-
-  const submitInput = (value: message) => {
-    if(value.command.includes("resp") && creator.userId == userId){
-      value.message = value.message.slice(5);
-      const cut = (value.tag.username.includes('@') ? value.tag.username.length + 2 : value.tag.username.length + 3);
-      value.message = value.message.slice(cut);
-      console.log(value.message);
-      axios
-      .put(
-        `${BACKEND_URI}/meeting/responsability/${meetingId}`,
-        {
-          userId: value.tag._id,
-          responsability: value.message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      )
-      .then(response => {
-        onCommandSubmit(response.data);
-      })
-      .catch(err => console.log(err));
-    }
-    else if(value.command.includes("resp") && creator.userId != userId){
-      
-    }
-    else{
-      axios
-      .put(
-        `${BACKEND_URI}/meeting/chat/${meetingId}`,
-        {
-          from: userId,
-          message: value.message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      )
-      .then(response => {
-        onChatSubmit(response.data);
-        container.current.scrollTop = container?.current?.scrollHeight;
-      })
-      .catch(err => console.log(err));
-
-    }
-  };
 
   useEffect(() => {
     if (container && container.current)
@@ -131,7 +73,6 @@ const MeetingChat: React.FunctionComponent<MeetingChatProps> = ({
           ))}
         </ChatContainer>
       </Container>
-      <ChatInput handleSubmit={submitInput} />
     </MeetingChatContainer>
   );
 };
