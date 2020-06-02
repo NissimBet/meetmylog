@@ -129,7 +129,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
   return (
     <React.Fragment>
       <Head>
-        <title>Crea una reunion</title>
+        <title>Create a meeting</title>
       </Head>
       <Formik
         initialValues={{
