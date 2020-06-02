@@ -150,7 +150,7 @@ function onKeyDown(keyEvent: {
 }
 
 const validation = object().shape({
-  memberEmail: string().email('Por favor ingrese un correo válido'),
+  memberEmail: string().email('Please enter a valid email'),
   members: array().notRequired(),
 });
 
@@ -272,7 +272,7 @@ const TeamPage: NextPage<{ token: string }> = props => {
                           } else {
                             actions.setFieldError(
                               'memberEmail',
-                              'Ese usuario ya esta en el equipo'
+                              'This user is already on this team '
                             );
                             actions.setSubmitting(false);
                           }
@@ -280,7 +280,7 @@ const TeamPage: NextPage<{ token: string }> = props => {
                         .catch(err => {
                           actions.setFieldError(
                             'memberEmail',
-                            'Ese usuario no existe'
+                            'User does not exist'
                           );
                           actions.setSubmitting(false);
 

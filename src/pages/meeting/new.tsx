@@ -60,15 +60,13 @@ const SelectionContainer = styled.div`
 
 // esquema de validacion del formulario de creacion de reuniones
 const validation = object().shape({
-  meetingName: string().required(
-    'Favor de seleccionar un nombre para la reunión'
-  ),
+  meetingName: string().required('Please input a meeting name'),
   share_method: string()
     .oneOf(
       ['groupId', 'share_link', 'members'],
-      'Favor seleccione una forma de compartir la reunión'
+      'Please select a way to share this meeting'
     )
-    .required('Favor seleccione una forma de compartir la reunión'),
+    .required('Please select a way to share this meeting'),
   members: array().notRequired(),
   share_link: string().notRequired(),
   groupId: string().notRequired(),
@@ -201,7 +199,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
             <h1>Crea tu reunion</h1>
             <FormContent>
               <InputContainer>
-                <Label htmlFor="meetingName">Nombre de la reunion</Label>
+                <Label htmlFor="meetingName">Meeting Name</Label>
                 <Input
                   type="text"
                   name="meetingName"
@@ -218,9 +216,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                 )}
 
               <InputContainer>
-                <Label htmlFor="share_method">
-                  Seleccione una forma de compartir la reunion
-                </Label>
+                <Label htmlFor="share_method">Sharing Method</Label>
 
                 <SelectComponent
                   handleBlur={formikBag.handleBlur}
@@ -229,12 +225,12 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
                   name="share_method"
                   values={[
                     { label: '', value: '' },
-                    { label: 'Equipo existente', value: 'groupId' },
+                    { label: 'Existing team', value: 'groupId' },
                     {
-                      label: 'Generar link para compartir',
+                      label: 'Generate share link',
                       value: 'share_link',
                     },
-                    { label: 'Nombres de usuario', value: 'members' },
+                    { label: 'By usernames', value: 'members' },
                   ]}
                 />
               </InputContainer>
@@ -246,7 +242,7 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
 
               {formikBag.values.share_method === 'groupId' && (
                 <SelectionContainer>
-                  <div>Ingrese el nombre del equipo de trabajo</div>
+                  <div>Type the name of the work team</div>
                   <GroupsList
                     selected={formikBag.values.groupId}
                     groups={groups}
@@ -258,12 +254,12 @@ const CreateMeetingPage: NextPage<{ token: string }> = props => {
               )}
               {formikBag.values.share_method === 'share_link' && (
                 <SelectionContainer>
-                  <div>Este es el link de la reunion</div>
+                  <div>This is the share link for this meeting:</div>
                 </SelectionContainer>
               )}
               {formikBag.values.share_method === 'members' && (
                 <SelectionContainer>
-                  <div>Ingrese el nombre de usuario los integrantes</div>
+                  <div>Type members' usernames</div>
                   <UsersList
                     selected={formikBag.values.members}
                     members={uniqueMembers}

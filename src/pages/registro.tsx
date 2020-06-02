@@ -42,17 +42,17 @@ const InputContainer = styled.div`
 const FormValidation = object().shape({
   username: string()
     /* .min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo') */
-    .required('Por favor ingrese su nombre de usuario'),
+    .required('Please input your user name'),
   email: string()
-    .email('Favor ingresa un correo válido')
-    .required('Favor ingresa un correo válido'),
+    .email('Please enter a valid email')
+    .required('Please enter a valid email'),
   password: string()
-    .required('Favor de ingresar su contraseña')
-    .matches(/[a-zA-Z0-9]*/, 'Solo debe contener numeros y letras')
-    .min(8, 'La contraseña debe ser al menos 8 caracteres largo'),
+    .required('Please enter your password')
+    .matches(/[a-zA-Z0-9]*/, 'Password should only contain numbers and letters')
+    .min(8, 'Password should be at least 8 characters long'),
   confirmPassword: string()
-    .required('Favor vuelva a ingresar su contraseña')
-    .test('passwords-match', 'La contraseñas no son iguales', function(val) {
+    .required('Please confirm your passwords')
+    .test('passwords-match', 'Passwords do not match', function(val) {
       return this.parent.password === val;
     }),
 });
