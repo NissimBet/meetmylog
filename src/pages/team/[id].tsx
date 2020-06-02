@@ -55,9 +55,10 @@ const ButtonNo = styled(Button)`
 `;
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 50% 10% auto;
+  grid-template-rows: 50% 10% auto%;
   grid-template-columns: auto 30%;
-  gap: 100px 40px;
+  gap: 10px 40px;
+  align-content: stretch;
   ${MeetingLists} {
     grid-column-start: 1;
     grid-column-end: 2;
@@ -66,10 +67,7 @@ const Container = styled.div`
   }
 
   ${UserLists} {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 3;
+    grid-area: 1 / col4-start / last-line / 6;
   }
 `;
 
@@ -138,7 +136,6 @@ const MiembrosContainer = styled.div`
     flex: 2;
   }
 `;
-
 function onKeyDown(keyEvent: {
   charCode: any;
   keyCode: any;
