@@ -90,8 +90,8 @@ const SelectionContainer = styled.div`
 
 // esquema de validacion del formulario de creacion de reuniones
 const validation = object().shape({
-  teamName: string().required('Favor de seleccionar un nombre para el equipo'),
-  memberEmail: string().email('Por favor ingrese un correo válido'),
+  teamName: string().required('Please input a name for the team'),
+  memberEmail: string().email('Please input a valid email'),
   members: array().notRequired(),
 });
 
@@ -113,7 +113,7 @@ const CreateTeamPage: NextPage<{ token: string }> = props => {
   return (
     <React.Fragment>
       <Head>
-        <title>Crea un Equipo</title>
+        <title>Create a Team</title>
       </Head>
       <Formik
         initialValues={{
@@ -148,7 +148,7 @@ const CreateTeamPage: NextPage<{ token: string }> = props => {
                 } else {
                   actions.setFieldError(
                     'memberEmail',
-                    'Ese usuario ya esta en el equipo'
+                    'That user is already on this team'
                   );
                   actions.setSubmitting(false);
                 }
@@ -199,10 +199,10 @@ const CreateTeamPage: NextPage<{ token: string }> = props => {
             }}
             onKeyDown={onKeyDown}
           >
-            <h1>Crea tu Equipo</h1>
+            <h1>Create a Team</h1>
             <FormContent>
               <InputContainer>
-                <Label htmlFor="meetingName">Nombre del equipo</Label>
+                <Label htmlFor="meetingName">Team Name</Label>
                 <Input
                   type="text"
                   name="teamName"
@@ -218,7 +218,7 @@ const CreateTeamPage: NextPage<{ token: string }> = props => {
               )}
 
               <InputContainer2>
-                <Label htmlFor="add_member">Agrega miembros al equipo</Label>
+                <Label htmlFor="add_member">Add Team Members</Label>
                 <Input
                   type="text"
                   name="memberEmail"
@@ -246,7 +246,7 @@ const CreateTeamPage: NextPage<{ token: string }> = props => {
                 <Error>{formikBag.errors.memberEmail}</Error>
               )}
               <MiembrosContainer>
-                <Label htmlFor="current_member">Miembros:</Label>
+                <Label htmlFor="current_member">Members:</Label>
                 <UsersList
                   variant="options"
                   selected={formikBag.values.members}

@@ -39,12 +39,15 @@ const InputContainer = styled.div`
 const FormValidation = object().shape({
   email: string()
     //.min(6, 'Su nombre de usuario debe ser al menos 6 caracteres de largo')
-    .email('Por favor ingrese un correo válido')
-    .required('Por favor ingrese su nombre de usuario'),
+    .email('Please input a valid email')
+    .required('Please enter your user name'),
   password: string()
-    .required('Favor de ingresar su contraseña')
-    .matches(/[a-zA-Z0-9]*/, 'Solo debe contener numeros y letras')
-    .min(8, 'La contraseña debe ser al menos 8 caracteres largo'),
+    .required('Please enter your password')
+    .matches(
+      /[a-zA-Z0-9]*/,
+      'The password should only contain numbers and letters'
+    )
+    .min(8, 'Password should be at least 8 characters long'),
 });
 
 const LoginPage: NextPage = () => {
