@@ -61,10 +61,11 @@ const IndexPage: NextPage = () => {
               height={'20px'}
               width={'20px'}
             />
-            <Title>Anota todo</Title>
+            <Title>Track everything</Title>
             <Paragraph>
-              Inicia tus reuniones, anota lo importante, registra tus acuerdos y
-              hazlo donde quieras.
+              With <strong>Meet My Log</strong> you can start a new meeting,
+              take note of what's important, and highlight team's agreements.
+              Anywhere.
             </Paragraph>
           </Card>
           <Card>
@@ -75,11 +76,11 @@ const IndexPage: NextPage = () => {
               height={'20px'}
               width={'20px'}
             />
-            <Title>Colabora</Title>
+            <Title>Collaborate</Title>
             <Paragraph>
-              Crea tus equipos de trabajo, agrégalos a tus reuniones, y
-              contribuyan <strong>en tiempo real</strong> en el chat de la
-              sesión.
+              Create your team, add members to your meetings, and contribute{' '}
+              <strong>in real time</strong> using the session's chat
+              functionality.
             </Paragraph>
           </Card>
           <Card>
@@ -90,10 +91,10 @@ const IndexPage: NextPage = () => {
               height={'20px'}
               width={'20px'}
             />
-            <Title>Accesa luego</Title>
+            <Title>Read Later</Title>
             <Paragraph>
-              Tus reuniones se quedarán registradas y podrás ver tus notas y los
-              acuerdos de tus compañeros cuando quieras.
+              Your meetings will stay on our servers so you can access your
+              notes and your team's agreements, any time you want.
             </Paragraph>
           </Card>
         </CardContainer>

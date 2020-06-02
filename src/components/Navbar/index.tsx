@@ -48,9 +48,9 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
     <NavbarContainer>
       <NavbarContent>
         <NavbarLinks position="left">
-          <NavLink to="/meeting/new">Inicia una Reunión</NavLink>
-          {userId && <NavLink to="/profile">Mi Perfil</NavLink>}
-          {userId && <NavLink to="/team/new">Crea un equipo</NavLink>}
+          <NavLink to="/meeting/new">Start a Meeting</NavLink>
+          {userId && <NavLink to="/profile">My Profile</NavLink>}
+          {userId && <NavLink to="/team/new">Create a Team</NavLink>}
         </NavbarLinks>
         <NavbarLinks position="center">
           <TitleLink to="/">{siteTitle}</TitleLink>
@@ -58,18 +58,18 @@ const Navbar: React.FunctionComponent<NavbarProps> = ({ siteTitle }) => {
         <NavbarLinks position="right">
           {userId ? (
             <Button variant="outline" onClick={logout}>
-              Cierra Sesión
+              Log Out
             </Button>
           ) : (
             <>
-              <NavLink to="/registro">Registrate</NavLink>
-              <NavLink to="/login">Inicia Sesión</NavLink>
+              <NavLink to="/registro">Sign Up</NavLink>
+              <NavLink to="/login">Log In</NavLink>
             </>
           )}
         </NavbarLinks>
         {userId && (
           <Button variant="outline" onClick={logout}>
-            Logout
+            Log Out
           </Button>
         )}
       </NavbarContent>

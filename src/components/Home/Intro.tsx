@@ -47,9 +47,9 @@ const HomeIntro: React.FunctionComponent = ({}) => {
   return (
     <Container>
       <Content>
-        <Title>Conoce Meet My Log</Title>
-        <Paragraph>No te pierdas tus juntas importantes. Nunca más.</Paragraph>
-        <StartButton>Crea una cuenta</StartButton>
+        <Title>Meet your new culture</Title>
+        <Paragraph>Don't miss an important meeting. Ever.</Paragraph>
+        <StartButton>Create an account</StartButton>
       </Content>
     </Container>
   );

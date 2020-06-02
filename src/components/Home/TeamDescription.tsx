@@ -33,21 +33,21 @@ const Team: React.FunctionComponent = () => {
   return (
     <Container>
       <Wrapper>
-        <h3>Quienes Somos</h3>
+        <h3>About Us</h3>
         <p>
-          AP4 es una startup dedicada a proveer soluciones de productividad en
-          la industria del conocimiento. <strong>Meet my log</strong> es una de
-          las iniciativas que buscan digitalizar el entorno laboral corporativo,
-          haciendo más sencilla la colaboración presencial o a distancia.
+          AP4 is a startup focused on coming up with new productivity solutions
+          for knowledge workers. <strong>Meet my log</strong> is one of the
+          initiatives looking to digitalize corporate work culture, making
+          collaboration easier than ever.
         </p>
         <p>
-          Meetmylog es una aplicación de código abierto en la que puedes
-          colaborar en{' '}
+          Meet My Log is an open-source app. You can open a pull request on{' '}
           <a href="https://github.com/NissimBet/meetmylog" target="_blank">
             Github
           </a>
-          , hacer una pull request y ayudar a reimaginar la experiencia con
-          minutas y reuniones en tu compañía.
+          , and help us reimagine the project management experience in your
+          company, and the world! We'll keep on working to make your lives
+          easier.
         </p>
       </Wrapper>
     </Container>
