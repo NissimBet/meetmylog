@@ -6,40 +6,33 @@ import MeetingContent from './MeetingContent';
 import MeetingSidebar from './MeetingSidebar';
 
 const MeetingPageContainer = styled.div`
-  display: grid;
-  grid-template-rows: 90% auto;
-  grid-template-columns: auto 28% 30% 10%;
-  gap: 70% 100px;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 `;
 
 const MeetingContentContainer = styled(MeetingContent)`
-  grid-column-start: 2;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 3;
+  flex: 5;
 
   height: 100%;
 `;
 
 const MeetingChatContainer = styled(MeetingChat)`
-  grid-column-start: 1;
-  grid-column-end: 2;
+  flex: 2;
   background-color: #aaa;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  min-width: 500px;
-  margin-left: -200px;
-  overflow: auto;
 
+  overflow: hidden;
+
+  min-width: 500px;
   height: 100%;
 `;
 
 const MeetingSidebarContainer = styled(MeetingSidebar)`
-  grid-column-start: 3;
-  grid-column-end: 4;
+  flex: 1;
   height: 100%;
   min-width: 250px;
 `;
+
 
 const MeetingPage: React.FunctionComponent<MeetingData & {
   token: string;
